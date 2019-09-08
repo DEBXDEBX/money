@@ -32,7 +32,7 @@
           );
       }
     </style>
-    <title>New File Cabinet</title>
+    <title>New Year</title>
   </head>
   <body id="addWindow">
     <div class="container">
@@ -74,7 +74,7 @@
         event.preventDefault();
         let { value } = document.querySelector("#name");
         value = value.trim();
-        ipcRenderer.send("fileCab:add", value);
+        ipcRenderer.send("year:add", value);
       });
 
       document.querySelector("#cancel").addEventListener("click", event => {

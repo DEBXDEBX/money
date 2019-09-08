@@ -26,12 +26,12 @@ app.on("ready", () => {
   Menu.setApplicationMenu(mainMenu);
 });
 
-//When you click on create file cab
-function createFileCabinet() {
+//When you click on create year
+function createYear() {
   addWindow = new BrowserWindow({
     width: 400,
     height: 300,
-    title: "Create New File Cabinet",
+    title: "Create New Year",
     parent: mainWindow,
     modal: true,
     show: true
@@ -43,6 +43,29 @@ function createFileCabinet() {
     addWindow = null;
   });
 }
+
+// this listens for the addWindow
+ipcMain.on("year:add", (event, name) => {
+  console.log(name);
+  // close the addWindow
+  addWindow.close();
+  // this is for extsions
+  let myOptions = {
+    filters: [{ name: "Custom File Type", extensions: ["deb"] }]
+  };
+  // open save dialog to create a fileNamePath
+  dialog.showSaveDialog(null, myOptions, fileNamePath => {
+    // send all info in an object to script.js
+    mainWindow.webContents.send("year:add", { fileNamePath, name });
+  });
+}); // End ipcMain.on("fileCab:add"
+
+// this listens for the addWindow cancel btn
+ipcMain.on("addForm:cancel", event => {
+  addWindow.close();
+  console.log("cancel clicked");
+}); // End ipcMain.on("addForm:cancel"
+
 //When you click on help
 function loadHelp() {
   helpWindow = new BrowserWindow({
@@ -59,9 +82,9 @@ function loadHelp() {
   });
 }
 
-//When You click on load file cab
-function loadFileCabinet() {
-  console.log("Start loading file cab....");
+//When You click on load year
+function loadYear() {
+  console.log("Start loading year....");
   // this is for extsions
   let myOptions = {
     filters: [{ name: "Custom File Type", extensions: ["deb"] }]
@@ -150,17 +173,17 @@ const menuTemplate = [
     label: "File",
     submenu: [
       {
-        label: "Create File Cabinet",
+        label: "Create New Year",
         accelerator: process.platform === "darwin" ? "Command+N" : "Ctrl+N",
         click() {
-          createFileCabinet();
+          createYear();
         }
       },
       {
-        label: "Load File Cabinet",
+        label: "Load Year",
         accelerator: process.platform === "darwin" ? "Command+O" : "Ctrl+O",
         click() {
-          loadFileCabinet();
+          loadYear();
         }
       },
 

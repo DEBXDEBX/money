@@ -24,4 +24,40 @@ a {
 h1 {
   color: var(--primary-color);
   text-shadow: 2px 2px var(--secondary-color);
+  text-align: center;
+}
+
+h6 {
+  margin: 10px;
+  text-align: center;
+  background-color: #4e5357;
+  border-radius: 15px;
+  padding: 0.45rem;
+  color: white;
+}
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  padding: 3px;
+  margin: 3px;
+}
+
+nav ul li {
+  list-style: none;
+  background-color: #d0215cbd;
+  color: rgb(0, 0, 0);
+  padding: 3px 10px;
+  margin: 4px 10px;
+  border-radius: 10px 10px 0px 0px;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+nav ul li:hover {
+  color: rgb(255, 255, 255);
+}
+ol > li:nth-child(odd) {
+  background-color: #b2b2b2;
 }

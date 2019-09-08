@@ -1,0 +1,27 @@
+/* Reset */
+* {
+  /* padding will not add to the ACTUALLY WIDTH OF THE BOX */
+  box-sizing: border-box;
+
+  margin: 0;
+  padding: 0;
+}
+/* Main Styling */
+html,
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.7em;
+}
+a {
+  text-decoration: none;
+}
+/* Create Variables */
+:root {
+  --primary-color: #0f0;
+  --secondary-color: #00f;
+}
+/* use Variables */
+h1 {
+  color: var(--primary-color);
+  text-shadow: 2px 2px var(--secondary-color);
+}

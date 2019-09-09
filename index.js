@@ -14,7 +14,12 @@ let helpWindow;
 app.on("ready", () => {
   // function to run when the app is ready
   // create browser window
-  mainWindow = new BrowserWindow({});
+  // webPreferences: true sets up the require in the script js file electron version 5.0.0 and above
+  mainWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
   // instruct main window to load html file, from the file system not http:
   mainWindow.loadURL(`file://${__dirname}/index.html`);
   mainWindow.maximize();

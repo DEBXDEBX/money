@@ -39,7 +39,10 @@ function createYear() {
     title: "Create New Year",
     parent: mainWindow,
     modal: true,
-    show: true
+    show: true,
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
   addWindow.setMenu(null);
   addWindow.loadURL(`file://${__dirname}/add.html`);

@@ -31,6 +31,9 @@
             rgba(0, 0, 255, 0) 70.71%
           );
       }
+      #addWindow {
+        margin-top: 40px;
+      }
     </style>
     <title>New Year</title>
   </head>
@@ -71,6 +74,7 @@
       const { ipcRenderer } = electron;
 
       document.querySelector("form").addEventListener("submit", event => {
+        console.log("clicked submit");
         event.preventDefault();
         let { value } = document.querySelector("#name");
         value = value.trim();
@@ -78,6 +82,7 @@
       });
 
       document.querySelector("#cancel").addEventListener("click", event => {
+        console.log("clicked cancel");
         ipcRenderer.send("addForm:cancel");
       });
     </script>

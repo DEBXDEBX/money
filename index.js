@@ -128,16 +128,17 @@ function loadYear() {
         }
 
         if (data) {
-          if (data.fileType === "ElectronFileCab2019April") {
+          if (data.fileType === "ElectronMomMoney2019September") {
             console.log("This is a valid file");
             // set filepath: This is in case you moved your file
             data.fileNamePath = filepath;
             // laod file cab
             console.log("sending data to script.js");
             // data is an object to be converted to an file cab object
-            mainWindow.webContents.send("fileCab:load", data);
+            mainWindow.webContents.send("yearObj:load", data);
           } else {
-            let message = "This is not a valid ElectronFileCab2019April file";
+            let message =
+              "This is not a valid ElectronMomMoney2019September file";
             let msgType = "error";
             mainWindow.webContents.send("Display:showAlert", {
               message,

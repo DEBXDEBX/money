@@ -10,7 +10,7 @@ class Elements {
     // total h1
     this.totalH1 = document.querySelector("#totalH1");
     // // select forms
-
+    this.myForm = document.querySelector("#myForm");
     // // select add show forms + / icon
 
     // // select textName and textArea

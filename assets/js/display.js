@@ -52,7 +52,11 @@ class Display {
   // Method
   paintYearTabs(mapedArray) {
     this.displayNone(this.elements.monthHeading);
+    this.displayNone(this.elements.monthList);
     this.displayNone(this.elements.transactionHeading);
+    this.displayNone(this.elements.transactionList);
+    this.displayNone(this.elements.totalH1);
+    this.displayNone(this.elements.myForm);
     this.clearYearDisplay();
 
     // this will paint all year tabs
@@ -78,6 +82,7 @@ class Display {
     this.displayNone(this.elements.monthList);
     this.displayBlock(this.elements.monthList);
     this.displayNone(this.elements.monthHeading);
+    this.displayNone(this.elements.myForm);
     this.displayBlock(this.elements.monthHeading);
     console.log("painting month tabs");
     // this will paint all month tabs
@@ -97,8 +102,12 @@ class Display {
   paintTransactions(transactionArray) {
     console.log("Prining transactions");
     this.clearTransactionDisplay();
+    this.displayNone(this.elements.totalH1);
+    this.displayNone(this.elements.myForm);
     this.displayNone(this.elements.transactionHeading);
+    this.displayBlock(this.elements.totalH1);
     this.displayBlock(this.elements.transactionHeading);
+    this.displayBlock(this.elements.myForm);
     // build div
     let totalPrice = 0;
     // make variable for html

@@ -51,12 +51,66 @@
       </nav>
     </section>
 
-    <section>
-      <h6 id="transactionHeading">Transactions</h6>
-      <nav>
-        <ul id="transactionList"></ul>
-      </nav>
-    </section>
+    <h6 id="transactionHeading">Transactions</h6>
+
+    <form id="myForm">
+      <div class="form-row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Store/Item" />
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Price" />
+        </div>
+        <div class="col">
+          <input class="form-check-input" type="checkbox" id="gridCheck" />
+          <label class="form-check-label" for="gridCheck">
+            Add Tax
+          </label>
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-primary form-control">
+            Add
+          </button>
+        </div>
+      </div>
+    </form>
+    <!-- <form id="myForm" class="form-inline">
+      <label class="sr-only" for="inlineFormInputName2">Name</label>
+      <input
+        type="text"
+        class="form-control mb-2 mr-sm-2"
+        id="inlineFormInputName2"
+        placeholder="Jane Doe"
+      />
+
+      <label class="sr-only" for="inlineFormInputGroupUsername2"
+        >Username</label
+      >
+      <div class="input-group mb-2 mr-sm-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">@</div>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          id="inlineFormInputGroupUsername2"
+          placeholder="Username"
+        />
+      </div>
+
+      <div class="form-check mb-2 mr-sm-2">
+        <input class="form-check-input" type="checkbox" id="inlineFormCheck" />
+        <label class="form-check-label" for="inlineFormCheck">
+          Remember me
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary mb-2">Submit</button>
+    </form> -->
+
+    <nav>
+      <ul id="transactionList"></ul>
+    </nav>
 
     <div id="totalDiv">
       <h1 id="totalH1"></h1>

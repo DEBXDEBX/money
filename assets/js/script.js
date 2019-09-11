@@ -106,6 +106,45 @@ ipcRenderer.on("year:add", (event, dataObj) => {
   display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
 });
 // End ipcRenderer.on("year:add"********************
+
+// listen for inedex.js to send data
+ipcRenderer.on("yearObj:load", (event, data) => {
+  // check if the fileNamePath already exists if it does alert and return
+  // make a variable to return
+  let isTaken = false;
+  arrayOfYearObjs.forEach(element => {
+    if (element.fileNamePath === data.fileNamePath) {
+      isTaken = true;
+    }
+  });
+  if (isTaken) {
+    // warningNameTakenAudio.play();
+    display.showAlert("That file is already loaded", "error");
+    // redisplay
+    // get the names for all the years
+    // and then send them to the Display
+    display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
+    return;
+  }
+  // create a year object
+  let newYear = new YearObject(
+    data.name,
+    data.fileNamePath,
+    data.arrayOfMonthObjects
+  );
+  // push the year obj into the array of year Objects
+  arrayOfYearObjs.push(newYear);
+  // write the year object to disk
+  newYear.writeYearToHardDisk(fs);
+  // redisplay
+  // get the names for all the years
+  // and then send them to the Display
+  display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
+  return;
+});
+//End ipcRenderer.on("year:load"*****************************
+// ***********************************************************
+
 //*************************************************** */
 
 el.yearList.addEventListener("click", e => {

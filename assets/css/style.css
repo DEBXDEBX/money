@@ -82,10 +82,14 @@ nav ul li:hover {
   color: white;
 }
 #monthHeading,
-#transactionHeading {
+#transactionHeading,
+#myForm {
   display: none;
 }
-
+#myForm {
+  max-width: 88%;
+  margin: 0 auto;
+}
 ol > li:nth-child(odd) {
   background-color: #b2b2b2;
 }

@@ -58,6 +58,34 @@ nav ul li {
 nav ul li:hover {
   color: rgb(255, 255, 255);
 }
+.success,
+.error {
+  color: white;
+  padding: 20px;
+  text-align: center;
+  width: 50%;
+  border-radius: 25px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.success {
+  background: green;
+}
+
+.error {
+  background: red;
+}
+.active {
+  color: white;
+}
+#monthHeading,
+#transactionHeading {
+  display: none;
+}
+
 ol > li:nth-child(odd) {
   background-color: #b2b2b2;
 }

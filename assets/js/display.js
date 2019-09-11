@@ -44,20 +44,17 @@ class Display {
     this.elements.monthList.innerHTML = "";
   } // End clearYearDisplay()
 
+  //Method
+  clearTransactionDisplay() {
+    this.elements.transactionList.innerHTML = "";
+  }
+
   // Method
   paintYearTabs(mapedArray) {
-    // this.clearFileCabDisplay();
-    // this.clearPrimaryDisplay();
-    // this.clearSubDisplay();
-    // this.clearNoteDisplay();
+    this.displayNone(this.elements.monthHeading);
+    this.displayNone(this.elements.transactionHeading);
     this.clearYearDisplay();
-    // this.displayNone(this.elements.mfHeading);
-    // this.displayNone(this.elements.sfHeading);
-    // this.displayNone(this.elements.nHeading);
-    // this.displayNone(this.elements.mainFolderForm);
-    // this.displayNone(this.elements.subFolderForm);
-    // this.displayNone(this.elements.noteForm);
-    // this.displayNone(this.elements.renameFileCabForm);
+
     // this will paint all year tabs
     // make variable for html
     let html = "";
@@ -73,19 +70,13 @@ class Display {
 
   // Method
   paintMonthTabs(mapedArray) {
-    // this.clearFileCabDisplay();
-    // this.clearPrimaryDisplay();
-    // this.clearSubDisplay();
-    // this.clearNoteDisplay();
     this.clearMonthDisplay();
-    // this.displayNone(this.elements.mfHeading);
-    // this.displayNone(this.elements.sfHeading);
-    // this.displayNone(this.elements.nHeading);
-    // this.displayNone(this.elements.mainFolderForm);
-    // this.displayNone(this.elements.subFolderForm);
-    // this.displayNone(this.elements.noteForm);
-    // this.displayNone(this.elements.renameFileCabForm);
-    // this will paint all year tabs
+    this.clearTransactionDisplay();
+    this.displayNone(this.transactionHeading);
+    this.displayNone(this.transactionList);
+    this.displayBlock(this.elements.monthHeading);
+
+    // this will paint all month tabs
     // make variable for html
     let html = "";
     mapedArray.forEach((element, index) => {

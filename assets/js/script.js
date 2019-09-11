@@ -18,6 +18,8 @@ const arrayOfYearObjs = [];
 const el = new Elements();
 // create display object
 const display = new Display(el, $);
+// create year index
+let yearIndex = -243;
 //*************************************************** */
 // Helper functions
 //*************************************************** */
@@ -95,7 +97,7 @@ ipcRenderer.on("year:add", (event, dataObj) => {
   arrayOfYearObjs.push(newYear);
   // write the year object to disk
   newYear.writeYearToHardDisk(fs);
-  console.log(newYear);
+
   // redisplay
   // get the names for all the years
   // and then send them to the Display
@@ -110,14 +112,14 @@ el.yearList.addEventListener("click", e => {
     // set's the current target active
     e.target.classList.add("active");
     //The Next code is to set the current tab color white with the active class
-    var el = document.querySelectorAll(".main");
+    var el = document.querySelectorAll(".year");
     for (let i = 0; i < el.length; i++) {
       el[i].onclick = function() {
         var c = 0;
         while (c < el.length) {
-          el[c++].className = "main";
+          el[c++].className = "year";
         }
-        el[i].className = "main active";
+        el[i].className = "year active";
       };
     }
   } // End code to set the active class
@@ -125,7 +127,10 @@ el.yearList.addEventListener("click", e => {
   // get the index from the html
   let index = e.target.dataset.index;
   index = parseInt(index);
-  mfI = index;
+  yearIndex = index;
 
   // get the array of months and send it to display
+  display.paintMonthTabs(
+    mapOutKey("name", arrayOfYearObjs[yearIndex].arrayOfMonthObjects)
+  );
 }); // End el.yearList.addEventListener()

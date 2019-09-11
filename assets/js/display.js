@@ -72,10 +72,14 @@ class Display {
   paintMonthTabs(mapedArray) {
     this.clearMonthDisplay();
     this.clearTransactionDisplay();
-    this.displayNone(this.transactionHeading);
-    this.displayNone(this.transactionList);
+    this.displayNone(this.elements.transactionHeading);
+    this.displayNone(this.elements.transactionList);
+    this.displayNone(this.elements.totalH1);
+    this.displayNone(this.elements.monthList);
+    this.displayBlock(this.elements.monthList);
+    this.displayNone(this.elements.monthHeading);
     this.displayBlock(this.elements.monthHeading);
-
+    console.log("painting month tabs");
     // this will paint all month tabs
     // make variable for html
     let html = "";
@@ -88,6 +92,28 @@ class Display {
     let tabList = document.getElementsByClassName("month");
     this.colorSetOfTabs(tabList);
   } // End paintFileCabTabs(mapedArray)
+
+  //Method
+  paintTransactions(transactionArray) {
+    console.log("Prining transactions");
+    this.clearTransactionDisplay();
+    this.displayNone(this.elements.transactionHeading);
+    this.displayBlock(this.elements.transactionHeading);
+    // build div
+    let totalPrice = 0;
+    // make variable for html
+    let html = "";
+    transactionArray.forEach((transaction, index) => {
+      html += `<li data-index="${index}" class="transaction"><h4>${
+        transaction.date
+      }</h4><h4>${transaction.storeItem}</h4><h4>${transaction.price}</h4><h4>${
+        transaction.tax
+      }</h4><h4>${(totalPrice += totalPrice)}</h4></li>`;
+    });
+    this.displayBlock(this.elements.transactionList);
+    this.elements.totalH1.innerHTML = `Total = ${totalPrice}`;
+    this.displayBlock(this.elements.totalH1);
+  } // End paintTransactions(transactionArray)
 
   //Method
   colorSetOfTabs(tabList) {

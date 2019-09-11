@@ -169,12 +169,6 @@ ipcMain.on("fileCab:add", (event, name) => {
   });
 }); // End ipcMain.on("fileCab:add"
 
-// this listens for the addWindow cancel btn
-ipcMain.on("addForm:cancel", event => {
-  addWindow.close();
-  console.log("cancel clicked");
-}); // End ipcMain.on("addForm:cancel"
-
 // Top Menu
 const menuTemplate = [
   {

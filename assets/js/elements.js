@@ -7,7 +7,8 @@ class Elements {
     // select headings
     this.monthHeading = document.querySelector("#monthHeading");
     this.transactionHeading = document.querySelector("#transactionHeading");
-
+    // total h1
+    this.totalH1 = document.querySelector("#totalH1");
     // // select forms
 
     // // select add show forms + / icon

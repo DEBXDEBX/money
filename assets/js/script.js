@@ -20,6 +20,8 @@ const el = new Elements();
 const display = new Display(el, $);
 // create year index
 let yearIndex = -243;
+// create month index
+let monthIndex = -243;
 //*************************************************** */
 // Helper functions
 //*************************************************** */
@@ -134,3 +136,33 @@ el.yearList.addEventListener("click", e => {
     mapOutKey("name", arrayOfYearObjs[yearIndex].arrayOfMonthObjects)
   );
 }); // End el.yearList.addEventListener()
+
+el.monthList.addEventListener("click", e => {
+  // event delegation
+  if (e.target.classList.contains("month")) {
+    // set's the current target active
+    e.target.classList.add("active");
+    //The Next code is to set the current tab color white with the active class
+    var el = document.querySelectorAll(".month");
+    for (let i = 0; i < el.length; i++) {
+      el[i].onclick = function() {
+        var c = 0;
+        while (c < el.length) {
+          el[c++].className = "month";
+        }
+        el[i].className = "month active";
+      };
+    }
+  } // End code to set the active class
+
+  // get the index from the html
+  let index = e.target.dataset.index;
+  index = parseInt(index);
+  monthIndex = index;
+
+  // get the array of Transactions and send it to display
+  display.paintTransactions(
+    arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
+      .arrayOfTransactions
+  );
+});

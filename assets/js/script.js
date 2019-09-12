@@ -11,6 +11,10 @@ let { dialog } = app;
 let fs = require("fs");
 const electron = require("electron");
 const { ipcRenderer } = electron;
+//select form
+let storeItem = document.querySelector("#storeItem");
+let price = document.querySelector("#price");
+let taxBox = document.querySelector("#taxInput");
 //Global variable's
 // This is the Main array that holds all the year objects
 const arrayOfYearObjs = [];
@@ -18,10 +22,39 @@ const arrayOfYearObjs = [];
 const el = new Elements();
 // create display object
 const display = new Display(el, $);
+// create tax percent
+let taxRate = 0.06;
 // create year index
 let yearIndex = -243;
 // create month index
 let monthIndex = -243;
+//The start of program exicution.
+window.onload = function() {
+  addDateToForm();
+  startUp();
+};
+// addDateToForm
+function addDateToForm() {
+  let options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  };
+  let date = new Date();
+  console.log(date.toLocaleDateString());
+  document.querySelector("#date").value = date.toLocaleDateString(
+    "en-US",
+    options
+  );
+}
+//startUp
+function startUp() {
+  //get data from settings obect
+
+  // set tax variable
+  document.querySelector("#taxSpan").textContent = `${taxRate}%`;
+}
 //*************************************************** */
 // Helper functions
 //*************************************************** */
@@ -199,6 +232,40 @@ el.monthList.addEventListener("click", e => {
   index = parseInt(index);
   monthIndex = index;
 
+  // get the array of Transactions and send it to display
+  display.paintTransactions(
+    arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
+      .arrayOfTransactions
+  );
+});
+
+// transaction form
+document.querySelector("#clear").addEventListener("click", e => {
+  storeItem.value = "";
+  price.value = "";
+  console.log(taxBox.isChecked());
+});
+
+document.querySelector("#transactionBtn").addEventListener("click", e => {
+  e.preventDefault();
+  let date = document.querySelector("#date").value;
+  let storeItem = document.querySelector("#storeItem").value;
+  let price = document.querySelector("#price").value;
+  let newTransaction;
+  if (taxBox.checked) {
+    // create transaction with tax
+    let tax = price * taxRate;
+    newTransaction = new Transaction(date, storeItem, price, tax);
+  } else {
+    // create transaction without tax
+    newTransaction = new Transaction(date, storeItem, price);
+  }
+  // push new transaction into array
+  arrayOfYearObjs[yearIndex].arrayOfMonthObjects[
+    monthIndex
+  ].arrayOfTransactions.push(newTransaction);
+  // save to disk
+  arrayOfYearObjs[yearIndex].writeYearToHardDisk(fs);
   // get the array of Transactions and send it to display
   display.paintTransactions(
     arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]

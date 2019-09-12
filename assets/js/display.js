@@ -65,7 +65,7 @@ class Display {
     mapedArray.forEach((element, index) => {
       html += `<li data-index="${index}" class="year">${element}</li>`;
     });
-    // paint file cab tabs
+    // paint year tabs
     this.elements.yearList.innerHTML = html;
     // color tabs
     let tabList = document.getElementsByClassName("year");
@@ -100,7 +100,7 @@ class Display {
 
   //Method
   paintTransactions(transactionArray) {
-    console.log("Prining transactions");
+    console.log("Printing transactions");
     this.clearTransactionDisplay();
     this.displayNone(this.elements.totalH1);
     this.displayNone(this.elements.myForm);
@@ -119,6 +119,8 @@ class Display {
         transaction.tax
       }</h4><h4>${(totalPrice += totalPrice)}</h4></li>`;
     });
+    // paint transactions
+    this.elements.transactionList.innerHTML = html;
     this.displayBlock(this.elements.transactionList);
     this.elements.totalH1.innerHTML = `Total = ${totalPrice}`;
     this.displayBlock(this.elements.totalH1);

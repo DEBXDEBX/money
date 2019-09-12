@@ -4,5 +4,6 @@ class Transaction {
     this.storeItem = storeItem;
     this.price = price;
     this.tax = tax;
+    this.subTotal = 0;
   } // End constructor
 } // End Transaction class

@@ -82,13 +82,28 @@ nav ul li:hover {
   color: white;
 }
 #monthHeading,
+#transactionHeading {
+  display: none;
+}
+/* #monthHeading,
 #transactionHeading,
 #myForm {
   display: none;
-}
+} */
 #myForm {
   max-width: 88%;
   margin: 0 auto;
+}
+#taxDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#taxInput {
+  margin: 10px 10px;
+}
+#taxSpan {
+  margin: 0 10px;
 }
 ol > li:nth-child(odd) {
   background-color: #b2b2b2;

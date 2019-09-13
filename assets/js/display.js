@@ -124,16 +124,35 @@ class Display {
     let html = "";
     transactionArray.forEach((transaction, index) => {
       if (transaction.price <= 0) {
-        html += `<li data-index="${index}" class="transaction red"><h4>${transaction.date}</h4><h4>${transaction.storeItem}</h4><h4>Price: ${transaction.price}</h4>Tax: <h4>${transaction.tax}</h4><h4>${transaction.subTotal}</h4></li>`;
+        html += `<li data-index="${index}" class="transaction red"><span title='Delete'><i class="fas fa-trash-alt deleteTrans"></i></span><h4>${
+          transaction.date
+        }</h4><h4>${
+          transaction.storeItem
+        }</h4><h4>Price: ${transaction.price.toFixed(
+          2
+        )}</h4><h4>Tax: ${transaction.tax.toFixed(
+          2
+        )}</h4><h4>${transaction.subTotal.toFixed(2)}</h4></li>`;
       } else {
-        html += `<li data-index="${index}" class="transaction"><h4>${transaction.date}</h4><h4>${transaction.storeItem}</h4><h4>Price: ${transaction.price}</h4>Tax: <h4>${transaction.tax}</h4><h4>${transaction.subTotal}</h4></li>`;
+        html += `<li data-index="${index}" class="transaction"><span title='Delete'><i class="fas fa-trash-alt deleteTrans"></i></span><h4>${
+          transaction.date
+        }</h4><h4>${
+          transaction.storeItem
+        }</h4><h4>Price: ${transaction.price.toFixed(
+          2
+        )}</h4><h4>Tax: ${transaction.tax.toFixed(
+          2
+        )}</h4><h4>${transaction.subTotal.toFixed(2)}</h4></li>`;
       }
     });
     // paint transactions
     this.elements.transactionList.innerHTML = html;
     this.displayBlock(this.elements.transactionList);
-    this.elements.totalH1.innerHTML = `Total = ${totalPrice}`;
+    this.elements.totalH1.innerHTML = `Total = ${totalPrice.toFixed(2)}`;
     this.displayBlock(this.elements.totalH1);
+    // // color tabs
+    // let tabList = document.getElementsByClassName("transaction");
+    // this.colorSetOfTabs(tabList);
   } // End paintTransactions(transactionArray)
 
   //Method

@@ -43,10 +43,7 @@ function addDateToForm() {
   };
   let date = new Date();
 
-  document.querySelector("#date").value = date.toLocaleDateString(
-    "en-US",
-    options
-  );
+  document.querySelector("#date").value = date.toLocaleDateString();
 }
 //startUp
 function startUp() {
@@ -243,7 +240,6 @@ el.monthList.addEventListener("click", e => {
 document.querySelector("#clear").addEventListener("click", e => {
   storeItem.value = "";
   price.value = "";
-  console.log(taxBox.isChecked());
 });
 
 document.querySelector("#transactionBtn").addEventListener("click", e => {
@@ -257,15 +253,11 @@ document.querySelector("#transactionBtn").addEventListener("click", e => {
   if (taxBox.checked) {
     // create transaction with tax
     let tax = price * taxRate;
-    newTransaction = new Transaction(
-      date,
-      storeItem,
-      price.toFixed(2),
-      tax.toFixed(2)
-    );
+    newTransaction = new Transaction(date, storeItem, price, tax);
+    taxBox.checked = false;
   } else {
     // create transaction without tax
-    newTransaction = new Transaction(date, storeItem, price.toFixed(2));
+    newTransaction = new Transaction(date, storeItem, price);
   }
   // push new transaction into array
   console.table(newTransaction);
@@ -279,4 +271,29 @@ document.querySelector("#transactionBtn").addEventListener("click", e => {
     arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
       .arrayOfTransactions
   );
+});
+
+document.querySelector("#transactionList").addEventListener("click", e => {
+  console.log("ul clicked");
+  // event delegation
+  if (e.target.classList.contains("deleteTrans")) {
+    // get the index from the html
+    if (e.ctrlKey) {
+      console.log("control key down");
+      let Index = e.target.parentElement.parentElement.dataset.index;
+      let deleteIndex = parseInt(Index);
+      console.log(deleteIndex);
+      // delete transaction
+      arrayOfYearObjs[yearIndex].arrayOfMonthObjects[
+        monthIndex
+      ].arrayOfTransactions.splice(deleteIndex, 1);
+      // save to disk
+      arrayOfYearObjs[yearIndex].writeYearToHardDisk(fs);
+      // get the array of Transactions and send it to display
+      display.paintTransactions(
+        arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
+          .arrayOfTransactions
+      );
+    }
+  }
 });

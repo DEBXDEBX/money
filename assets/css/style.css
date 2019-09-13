@@ -81,15 +81,15 @@ nav ul li:hover {
 .active {
   color: white;
 }
-#monthHeading,
+/* #monthHeading,
 #transactionHeading {
   display: none;
-}
-/* #monthHeading,
+} */
+#monthHeading,
 #transactionHeading,
 #myForm {
   display: none;
-} */
+}
 #myForm {
   max-width: 88%;
   margin: 0 auto;
@@ -113,6 +113,14 @@ nav ul li:hover {
 .red {
   color: red;
 }
-ol > li:nth-child(odd) {
+
+.deleteTrans {
+  color: red;
+  margin: 12px;
+}
+nav li.transaction:nth-child(odd) {
   background-color: #b2b2b2;
+}
+nav li.transaction:nth-child(even) {
+  background-color: #f3f0f0;
 }

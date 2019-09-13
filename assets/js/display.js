@@ -84,7 +84,7 @@ class Display {
     this.displayNone(this.elements.monthHeading);
     this.displayNone(this.elements.myForm);
     this.displayBlock(this.elements.monthHeading);
-    console.log("painting month tabs");
+
     // this will paint all month tabs
     // make variable for html
     let html = "";
@@ -100,7 +100,6 @@ class Display {
 
   //Method
   paintTransactions(transactionArray) {
-    console.log("Printing transactions");
     this.clearTransactionDisplay();
     this.displayNone(this.elements.totalH1);
     this.displayNone(this.elements.myForm);
@@ -110,14 +109,25 @@ class Display {
     this.displayBlock(this.elements.myForm);
     // build div
     let totalPrice = 0;
+    //set subTotal and total
+    transactionArray.forEach(transaction => {
+      console.table(transaction);
+      totalPrice =
+        totalPrice + Number(transaction.price) + Number(transaction.tax);
+      console.log(totalPrice);
+      totalPrice = totalPrice;
+      console.log(totalPrice);
+      transaction.subTotal = totalPrice;
+      console.log(transaction.subTotal);
+    });
     // make variable for html
     let html = "";
     transactionArray.forEach((transaction, index) => {
-      html += `<li data-index="${index}" class="transaction"><h4>${
-        transaction.date
-      }</h4><h4>${transaction.storeItem}</h4><h4>${transaction.price}</h4><h4>${
-        transaction.tax
-      }</h4><h4>${(totalPrice += totalPrice)}</h4></li>`;
+      if (transaction.price <= 0) {
+        html += `<li data-index="${index}" class="transaction red"><h4>${transaction.date}</h4><h4>${transaction.storeItem}</h4><h4>Price: ${transaction.price}</h4>Tax: <h4>${transaction.tax}</h4><h4>${transaction.subTotal}</h4></li>`;
+      } else {
+        html += `<li data-index="${index}" class="transaction"><h4>${transaction.date}</h4><h4>${transaction.storeItem}</h4><h4>Price: ${transaction.price}</h4>Tax: <h4>${transaction.tax}</h4><h4>${transaction.subTotal}</h4></li>`;
+      }
     });
     // paint transactions
     this.elements.transactionList.innerHTML = html;

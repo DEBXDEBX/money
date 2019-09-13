@@ -105,6 +105,14 @@ nav ul li:hover {
 #taxSpan {
   margin: 0 10px;
 }
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.red {
+  color: red;
+}
 ol > li:nth-child(odd) {
   background-color: #b2b2b2;
 }

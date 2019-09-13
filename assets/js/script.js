@@ -42,7 +42,7 @@ function addDateToForm() {
     day: "numeric"
   };
   let date = new Date();
-  console.log(date.toLocaleDateString());
+
   document.querySelector("#date").value = date.toLocaleDateString(
     "en-US",
     options
@@ -251,16 +251,24 @@ document.querySelector("#transactionBtn").addEventListener("click", e => {
   let date = document.querySelector("#date").value;
   let storeItem = document.querySelector("#storeItem").value;
   let price = document.querySelector("#price").value;
+  price = Number(price);
+  console.log(price);
   let newTransaction;
   if (taxBox.checked) {
     // create transaction with tax
     let tax = price * taxRate;
-    newTransaction = new Transaction(date, storeItem, price, tax);
+    newTransaction = new Transaction(
+      date,
+      storeItem,
+      price.toFixed(2),
+      tax.toFixed(2)
+    );
   } else {
     // create transaction without tax
-    newTransaction = new Transaction(date, storeItem, price);
+    newTransaction = new Transaction(date, storeItem, price.toFixed(2));
   }
   // push new transaction into array
+  console.table(newTransaction);
   arrayOfYearObjs[yearIndex].arrayOfMonthObjects[
     monthIndex
   ].arrayOfTransactions.push(newTransaction);

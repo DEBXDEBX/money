@@ -28,6 +28,8 @@ let taxRate = 0.06;
 let yearIndex = -243;
 // create month index
 let monthIndex = -243;
+// this is for the fontSize
+let root = document.querySelector(":root");
 //The start of program exicution.
 window.onload = function() {
   addDateToForm();
@@ -64,6 +66,18 @@ function mapOutKey(key, array) {
 //************************************************ */
 // IPC
 //************************************************ */
+
+// listen for index.js to show settings form
+ipcRenderer.on("SettingsForm:show", event => {
+  // loadUpSettingsForm();
+  display.showSettingsForm();
+});
+
+// listen for inedex.js to send data
+ipcRenderer.on("Display:showAlert", (event, dataObj) => {
+  display.showAlert(dataObj.message, dataObj.msgType);
+}); // End ipcRenderer.on("Display:showAlert"
+
 // listen for inedex.js to send data
 ipcRenderer.on("year:add", (event, dataObj) => {
   if (dataObj.name === "") {
@@ -136,6 +150,29 @@ ipcRenderer.on("year:add", (event, dataObj) => {
   display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
 });
 // End ipcRenderer.on("year:add"********************
+
+// listen for index.js to change font size
+ipcRenderer.on("FontSize:change", (event, fontSize) => {
+  switch (fontSize) {
+    case "x-small":
+      root.style.fontSize = "10px";
+      break;
+    case "small":
+      root.style.fontSize = "12px";
+      break;
+    case "normal":
+      root.style.fontSize = "16px";
+      break;
+    case "large":
+      root.style.fontSize = "20px";
+      break;
+    case "x-large":
+      root.style.fontSize = "24px";
+      break;
+    default:
+      console.log("No valid font-size");
+  }
+}); // End ipcRenderer.on("FontSize:change"
 
 // listen for inedex.js to send data
 ipcRenderer.on("yearObj:load", (event, data) => {
@@ -248,7 +285,6 @@ document.querySelector("#transactionBtn").addEventListener("click", e => {
   let storeItem = document.querySelector("#storeItem").value;
   let price = document.querySelector("#price").value;
   price = Number(price);
-  console.log(price);
   let newTransaction;
   if (taxBox.checked) {
     // create transaction with tax
@@ -260,7 +296,6 @@ document.querySelector("#transactionBtn").addEventListener("click", e => {
     newTransaction = new Transaction(date, storeItem, price);
   }
   // push new transaction into array
-  console.table(newTransaction);
   arrayOfYearObjs[yearIndex].arrayOfMonthObjects[
     monthIndex
   ].arrayOfTransactions.push(newTransaction);

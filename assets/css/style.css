@@ -87,7 +87,8 @@ nav ul li:hover {
 } */
 #monthHeading,
 #transactionHeading,
-#myForm {
+#myForm,
+#settingsForm {
   display: none;
 }
 #myForm {
@@ -118,9 +119,40 @@ nav ul li:hover {
   color: red;
   margin: 12px;
 }
+
 nav li.transaction:nth-child(odd) {
   background-color: #b2b2b2;
 }
 nav li.transaction:nth-child(even) {
   background-color: #f3f0f0;
+}
+/* settings form  */
+#settingsForm {
+  background-color: white;
+}
+​ input[type="radio"] {
+  margin: 10px;
+  font-size: 16px;
+}
+.deleteFile {
+  color: red;
+  margin: 12px;
+}
+.autoLoad {
+  color: #007bff;
+  font-size: 14px;
+}
+#settingsForm {
+  border: 20px solid white;
+  border-radius: 20px;
+}
+.setFlex {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  background-color: #aea9ad;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 22px;
 }

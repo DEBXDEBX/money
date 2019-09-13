@@ -10,7 +10,7 @@
     <meta name="description" content="This is my website description" />
     <meta name="keywords" content="web development, web design" />
 
-    <!-- date picker -->
+    
 
     <!-- Bootstrap CSS -->
     <link
@@ -121,6 +121,67 @@
       </div>
     </form>
 
+
+    
+    <form id="settingsForm">
+      <!-- Theme -->
+      <div class="form-group setFlex">
+    
+          <label for="theme">Pick a theme</label>
+     
+     <div>
+       <input id="Dark" type="radio" name="theme" value="Dark" checked> Dark
+     </div>
+     <div>
+       <input id="Light" type="radio" name="theme" value="Light"> Light
+     </div>
+    </div>
+
+      <!-- Font Size -->
+      <div class="form-group setFlex">
+      <label for="fontSize">Pick a font size</label>
+      <div>
+      <input id="x-small" type="radio" name="fontSize" value="x-small" > x-small
+      <input id="small" type="radio" name="fontSize" value="small"> small
+      <input id="normal" type="radio" name="fontSize" value="normal" checked> normal
+      <input id="large" type="radio" name="fontSize" value="large"> large
+      <input id="x-large" type="radio" name="fontSize" value="x-large" > x-large
+    </div>
+  </div>
+  </div>
+    <div> <input id="autoLoad" type="checkbox" > Auto Load File Cabinent's</div>
+<div>
+</div>
+
+<div><ol type="1" id="autoLoadList">
+<!-- this is were the paths get displayed  -->
+</ol></div>
+
+<div class="form-group">
+    <button class="btn btn-primary form-control" id="settingsAddPath" type="button">Add File To Auto Load List</button>
+</div>
+      <div class="form-group">
+      <input
+          id="settingsSave"
+          class="btn btn-success form-control"
+          type="submit"
+          value="Save Settings"
+        />
+
+      </div>
+      
+
+      </div>
+      <div class="form-group">
+        <button
+          id="settingsCancel"
+          class="btn btn-warning form-control"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
@@ -146,6 +207,8 @@
     <script type="text/javascript" src="assets/js/monthObj.js"></script>
     <script type="text/javascript" src="assets/js/yearObj.js"></script>
     <script type="text/javascript" src="assets/js/transaction.js"></script>
+    <script type="text/javascript" src="assets/js/settingsObj.js"></script>
+    <script type="text/javascript" src="assets/js/settingsStorage.js"></script>
     <script type="text/javascript" src="assets/js/script.js"></script>
   </body>
 </html>

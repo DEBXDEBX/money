@@ -17,7 +17,7 @@ class Display {
     // Get parent
     const container = document.querySelector("body");
     // Insert alert other element
-    container.insertBefore(div, this.elements.nHeading);
+    container.insertBefore(div, this.elements.transactionHeading);
     // Timeout after 4 sec
     setTimeout(function() {
       document.querySelector(".alert").remove();
@@ -111,14 +111,9 @@ class Display {
     let totalPrice = 0;
     //set subTotal and total
     transactionArray.forEach(transaction => {
-      console.table(transaction);
-      totalPrice =
-        totalPrice + Number(transaction.price) + Number(transaction.tax);
-      console.log(totalPrice);
+      totalPrice = totalPrice + transaction.price + transaction.tax;
       totalPrice = totalPrice;
-      console.log(totalPrice);
       transaction.subTotal = totalPrice;
-      console.log(transaction.subTotal);
     });
     // make variable for html
     let html = "";
@@ -150,9 +145,6 @@ class Display {
     this.displayBlock(this.elements.transactionList);
     this.elements.totalH1.innerHTML = `Total = ${totalPrice.toFixed(2)}`;
     this.displayBlock(this.elements.totalH1);
-    // // color tabs
-    // let tabList = document.getElementsByClassName("transaction");
-    // this.colorSetOfTabs(tabList);
   } // End paintTransactions(transactionArray)
 
   //Method
@@ -180,4 +172,19 @@ class Display {
       }
     }
   } // End colorSetOfTabs(tabList)
+
+  //Method
+  showSettingsForm() {
+    //  hide everything
+    this.displayNone(this.elements.yearList);
+    this.displayNone(this.elements.monthList);
+    this.displayNone(this.elements.transactionList);
+    this.displayNone(this.elements.monthHeading);
+    this.displayNone(this.elements.totalH1);
+    this.displayNone(this.elements.transactionHeading);
+    this.displayNone(this.elements.myForm);
+    this.displayNone(this.elements.yearHeading);
+    //show settings form
+    this.displayBlock(this.elements.settingsForm);
+  } // End showSettingsForm()
 } // End Display class

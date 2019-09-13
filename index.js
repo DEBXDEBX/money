@@ -151,6 +151,10 @@ function loadYear() {
   }
 } // End readFileContents(filepath)
 
+function showSettingsForm() {
+  mainWindow.webContents.send("SettingsForm:show");
+} // End showSettingsForm()
+
 function setFontSize(fontSize) {
   mainWindow.webContents.send("FontSize:change", fontSize);
 } // End setFontSize(fontSize)

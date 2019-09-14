@@ -1,9 +1,8 @@
-Notes;
 class SettingsObj {
   constructor() {
-    this.theme = "Dark";
+    this.taxRate = 0.06;
     this.fontSize = "normal";
-    this.type = "fileCab";
+    this.type = "momMoney";
     this.filePathArray = [];
     this.autoLoad = false;
   } // End constructor

@@ -124,7 +124,10 @@ nav li.transaction:nth-child(odd) {
   background-color: #b2b2b2;
 }
 nav li.transaction:nth-child(even) {
-  background-color: #f3f0f0;
+  background-color: #e4e2e2;
+}
+nav li.transaction:hover {
+  color: #e217a2;
 }
 /* settings form  */
 #settingsForm {

@@ -123,27 +123,27 @@ class Display {
           transaction.date
         }</h4><h4>${
           transaction.storeItem
-        }</h4><h4>Price: ${transaction.price.toFixed(
+        }</h4><h4>Price: $${transaction.price.toFixed(
           2
-        )}</h4><h4>Tax: ${transaction.tax.toFixed(
+        )}</h4><h4>Tax: $${transaction.tax.toFixed(
           2
-        )}</h4><h4>${transaction.subTotal.toFixed(2)}</h4></li>`;
+        )}</h4><h4>$${transaction.subTotal.toFixed(2)}</h4></li>`;
       } else {
         html += `<li data-index="${index}" class="transaction"><span title='Delete'><i class="fas fa-trash-alt deleteTrans"></i></span><h4>${
           transaction.date
         }</h4><h4>${
           transaction.storeItem
-        }</h4><h4>Price: ${transaction.price.toFixed(
+        }</h4><h4>Price: $${transaction.price.toFixed(
           2
-        )}</h4><h4>Tax: ${transaction.tax.toFixed(
+        )}</h4><h4>Tax: $${transaction.tax.toFixed(
           2
-        )}</h4><h4>${transaction.subTotal.toFixed(2)}</h4></li>`;
+        )}</h4><h4>$${transaction.subTotal.toFixed(2)}</h4></li>`;
       }
     });
     // paint transactions
     this.elements.transactionList.innerHTML = html;
     this.displayBlock(this.elements.transactionList);
-    this.elements.totalH1.innerHTML = `Total = ${totalPrice.toFixed(2)}`;
+    this.elements.totalH1.innerHTML = `Total = $${totalPrice.toFixed(2)}`;
     this.displayBlock(this.elements.totalH1);
   } // End paintTransactions(transactionArray)
 

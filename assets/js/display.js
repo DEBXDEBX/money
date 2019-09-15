@@ -187,4 +187,22 @@ class Display {
     //show settings form
     this.displayBlock(this.elements.settingsForm);
   } // End showSettingsForm()
+
+  //Method
+  clearAutoLoadUL() {
+    // clear the ul
+    this.elements.autoLoadList.innerHTML = "";
+  } // End clearAutoLoadUL()
+
+  //Method
+  showAutoLoadList(autoLoadArray) {
+    // clear the ul
+    this.clearAutoLoadUL();
+    // make variable for html
+    let html = "";
+    autoLoadArray.forEach((element, index) => {
+      html += `<li data-index="${index}" class="autoLoad"><span title='Delete'><i class="fas fa-trash-alt deleteFile"></i></span>${element}</li>`;
+    });
+    this.elements.autoLoadList.innerHTML = html;
+  }
 } // End Display class

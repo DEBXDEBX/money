@@ -30,6 +30,8 @@ let yearIndex = -243;
 let monthIndex = -243;
 // this is for the fontSize
 let root = document.querySelector(":root");
+// temp hold for array
+let settingsArrayContainer;
 //The start of program exicution.
 window.onload = function() {
   addDateToForm();
@@ -50,7 +52,23 @@ function addDateToForm() {
 //startUp
 function startUp() {
   //get data from settings obect
+  let settingsStorage = new SettingsStorage();
+  let settings = settingsStorage.getSettingsFromFile();
 
+  if (settings.type === "momMoney") {
+    // set the holding array
+    settingsArrayContainer = settings.filePathArray;
+    // loadsettings
+    applySettings(settings);
+    // update Form
+    display.showAutoLoadList(settingsArrayContainer);
+    var x = document.querySelector("#autoLoad").checked;
+    if (x === true) {
+      if (settings.filePathArray) {
+        autoLoadYearObjects(settings.filePathArray);
+      }
+    }
+  }
   // set tax variable
   document.querySelector("#taxSpan").textContent = `${taxRate}%`;
 }
@@ -63,13 +81,139 @@ function mapOutKey(key, array) {
   });
   return newArray;
 }
+function autoLoadYearObjects(array) {
+  array.forEach(function(item) {
+    readFileContents(item);
+  });
+}
+
+function readFileContents(filepath) {
+  fs.readFile(filepath, "utf-8", (err, data) => {
+    if (err) {
+      let message = "An error occured reading the file.";
+      let msgType = "error";
+      display.showAlert(message, msgType);
+      return;
+    } else {
+      try {
+        data = JSON.parse(data);
+      } catch {
+        let message = "Can not parse data";
+        let msgType = "error";
+        display.showAlert(message, msgType);
+        return;
+      }
+
+      if (data) {
+        if (data.fileType === "ElectronMomMoney2019September") {
+          // set filepath: This is in case you moved your file
+          data.fileNamePath = filepath;
+
+          // check if the fileNamePath already exists if it does alert and return
+          // make a variable to return
+          let isTaken = false;
+          arrayOfYearObjs.forEach(element => {
+            if (element.fileNamePath === data.fileNamePath) {
+              isTaken = true;
+            }
+          });
+          if (isTaken) {
+            display.showAlert("That file is already loaded", "error");
+            // redisplay
+            // get the names for all the years
+            // and then send them to the Display
+            display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
+            return;
+          }
+          // create a file cab object
+          let newYearObject = new YearObject(
+            data.name,
+            data.fileNamePath,
+            data.arrayOfMonthObjects
+          );
+          // push the file cab obj into the array of file cabinets
+          arrayOfYearObjs.push(newYearObject);
+          // write the file cab object to disk
+          newYearObject.writeFileCabToHardDisk(fs);
+          // redisplay
+          // get the names for all the years
+          // and then send them to the Display
+          display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
+          return;
+        } else {
+          let message = "This is not a valid ElectronFileCab2019April file";
+          let msgType = "error";
+          display.showAlert(message, msgType);
+        }
+      }
+    }
+  });
+}
+function loadUpSettingsForm() {
+  let settingsStorage = new SettingsStorage();
+  let settings = settingsStorage.getSettingsFromFile();
+  settingsArrayContainer = settings.filePathArray;
+
+  if (settings.type === "momMoney") {
+    //set the tax rate text input
+    document.querySelector("#taxRate").value = settings.taxRate;
+    // check the right font size
+    switch (settings.fontSize) {
+      case "x-small":
+        document.querySelector("#x-small").checked = true;
+        break;
+      case "small":
+        document.querySelector("#small").checked = true;
+        break;
+      case "normal":
+        document.querySelector("#normal").checked = true;
+        break;
+      case "large":
+        document.querySelector("#large").checked = true;
+        break;
+      case "x-large":
+        document.querySelector("#x-large").checked = true;
+        break;
+      default:
+        console.log("No valid font size");
+    }
+  }
+
+  // update autoload form ul
+  display.showAutoLoadList(settingsArrayContainer);
+} // End
+
+function applySettings(settings) {
+  if (settings.autoLoad === true) {
+    document.querySelector("#autoLoad").checked = true;
+  }
+  switch (settings.fontSize) {
+    case "x-small":
+      root.style.fontSize = "10px";
+      break;
+    case "small":
+      root.style.fontSize = "12px";
+      break;
+    case "normal":
+      root.style.fontSize = "16px";
+      break;
+    case "large":
+      root.style.fontSize = "20px";
+      break;
+    case "x-large":
+      root.style.fontSize = "24px";
+      break;
+    default:
+      console.log("No valid font-size");
+  }
+} // End
 //************************************************ */
 // IPC
 //************************************************ */
 
 // listen for index.js to show settings form
 ipcRenderer.on("SettingsForm:show", event => {
-  // loadUpSettingsForm();
+  loadUpSettingsForm();
   display.showSettingsForm();
 });
 

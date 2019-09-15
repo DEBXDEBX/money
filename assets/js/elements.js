@@ -18,6 +18,6 @@ class Elements {
     // // select textName and textArea
 
     // // select the autoload list
-    // this.autoLoadList = document.querySelector("#autoLoadList");
+    this.autoLoadList = document.querySelector("#autoLoadList");
   } // End constructor
 } // End Elements class

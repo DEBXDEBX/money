@@ -40,6 +40,35 @@
     <title>My New Project</title>
   </head>
   <body>
+
+      <audio id="addAudio">
+          <source src="assets/sound/add.wav" type="audio/wav" />
+        </audio>
+        <audio id="addImageAudio">
+          <source src="assets/sound/addImage.wav" type="audio/wav" />
+        </audio>
+        <audio id="deleteAudio">
+          <source src="assets/sound/delete.wav" type="audio/wav" />
+        </audio>
+        <audio id="warningEmptyAudio">
+          <source src="assets/sound/warningEmpty.wav" type="audio/wav" />
+        </audio>
+        <audio id="warningSelectAudio">
+          <source src="assets/sound/warningSelect.wav" type="audio/wav" />
+        </audio>
+        <audio id="warningNameTakenAudio">
+          <source src="assets/sound/warningNameTaken.wav" type="audio/wav" />
+        </audio>
+        <audio id="tabAudio">
+          <source src="assets/sound/tab.wav" type="audio/wav" />
+        </audio>
+        <audio id="btnAudio">
+          <source src="assets/sound/btn.wav" type="audio/wav" />
+        </audio>
+        <audio id="cancelAudio">
+          <source src="assets/sound/cancel.wav" type="audio/wav" />
+        </audio>
+
     <h1>Mom's Money</h1>
     <header>
       <h6 id="yearHeading">Year</h6>
@@ -174,9 +203,18 @@
         />
 
       </div>
-      
-
       </div>
+
+      <div class="form-group">
+        <button
+          id="factoryReset"
+          class="btn btn-danger form-control"
+          type="button"
+        >
+          Factory Reset
+        </button>
+      </div>
+
       <div class="form-group">
         <button
           id="settingsCancel"

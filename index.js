@@ -52,7 +52,7 @@ function createYear() {
   });
 }
 
-// this listens for the addWindow
+// this listens for the add window
 ipcMain.on("year:add", (event, name) => {
   console.log(name);
   // close the addWindow

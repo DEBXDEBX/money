@@ -15,6 +15,16 @@ const { ipcRenderer } = electron;
 let storeItem = document.querySelector("#storeItem");
 let price = document.querySelector("#price");
 let taxBox = document.querySelector("#taxInput");
+//Select audio files
+const addAudio = document.querySelector("#addAudio");
+const addImageAudio = document.querySelector("#addImageAudio");
+const deleteAudio = document.querySelector("#deleteAudio");
+const warningEmptyAudio = document.querySelector("#warningEmptyAudio");
+const warningSelectAudio = document.querySelector("#warningSelectAudio");
+const warningNameTakenAudio = document.querySelector("#warningNameTakenAudio");
+const tabAudio = document.querySelector("#tabAudio");
+const btnAudio = document.querySelector("#btnAudio");
+const cancelAudio = document.querySelector("#cancelAudio");
 //Global variable's
 // This is the Main array that holds all the year objects
 const arrayOfYearObjs = [];
@@ -30,6 +40,8 @@ let yearIndex = -243;
 let monthIndex = -243;
 // this is for the fontSize
 let root = document.querySelector(":root");
+// auto load heck box
+let checkBox = document.querySelector("#autoLoad");
 // temp hold for array
 let settingsArrayContainer;
 //The start of program exicution.
@@ -69,12 +81,41 @@ function startUp() {
       }
     }
   }
-  // set tax variable
-  document.querySelector("#taxSpan").textContent = `${taxRate}%`;
 }
 //*************************************************** */
 // Helper functions
 //*************************************************** */
+// Sort an array by it's name
+function sortArrayByName(array) {
+  array.sort(function(a, b) {
+    var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+    var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    // names must be eimagePathual
+    return 0;
+  }); //End sort function
+}
+// get the value of the selected radio button
+function getRadioValue(form, name) {
+  var val;
+  // get list of radio buttons with specified name
+  var radios = form.elements[name];
+  // loop through list of radio buttons
+  for (var i = 0, len = radios.length; i < len; i++) {
+    if (radios[i].checked) {
+      // radio checked?
+      val = radios[i].value; // if so, hold its value in val
+      break; // and break out of for loop
+    }
+  }
+  return val; // return value of checked radio or undefined if none checked
+}
+
 function mapOutKey(key, array) {
   const newArray = array.map(function(item) {
     return item[key];
@@ -133,8 +174,9 @@ function readFileContents(filepath) {
           );
           // push the file cab obj into the array of file cabinets
           arrayOfYearObjs.push(newYearObject);
+          sortArrayByName(arrayOfYearObjs);
           // write the file cab object to disk
-          newYearObject.writeFileCabToHardDisk(fs);
+          newYearObject.writeYearToHardDisk(fs);
           // redisplay
           // get the names for all the years
           // and then send them to the Display
@@ -157,6 +199,16 @@ function loadUpSettingsForm() {
   if (settings.type === "momMoney") {
     //set the tax rate text input
     document.querySelector("#taxRate").value = settings.taxRate;
+
+    // set check box
+    if (settings.autoLoad) {
+      // check the box
+      checkBox.checked = true;
+    } else {
+      // uncheck the box
+      checkBox.checked = false;
+    }
+
     // check the right font size
     switch (settings.fontSize) {
       case "x-small":
@@ -178,15 +230,18 @@ function loadUpSettingsForm() {
         console.log("No valid font size");
     }
   }
-
   // update autoload form ul
   display.showAutoLoadList(settingsArrayContainer);
-} // End
+} // End loadUpSettingsForm()
 
 function applySettings(settings) {
   if (settings.autoLoad === true) {
     document.querySelector("#autoLoad").checked = true;
   }
+  // set tax variable
+  taxRate = settings.taxRate;
+  document.querySelector("#taxSpan").textContent = `${settings.taxRate}%`;
+
   switch (settings.fontSize) {
     case "x-small":
       root.style.fontSize = "10px";
@@ -285,6 +340,7 @@ ipcRenderer.on("year:add", (event, dataObj) => {
   newYear.arrayOfMonthObjects.push(December);
   // push the year obj into the array of year objects
   arrayOfYearObjs.push(newYear);
+  sortArrayByName(arrayOfYearObjs);
   // write the year object to disk
   newYear.writeYearToHardDisk(fs);
 
@@ -345,6 +401,7 @@ ipcRenderer.on("yearObj:load", (event, data) => {
   );
   // push the year obj into the array of year Objects
   arrayOfYearObjs.push(newYear);
+  sortArrayByName(arrayOfYearObjs);
   // write the year object to disk
   newYear.writeYearToHardDisk(fs);
   // redisplay
@@ -381,6 +438,13 @@ el.yearList.addEventListener("click", e => {
   index = parseInt(index);
   yearIndex = index;
 
+  // Bug fix
+  if (isNaN(yearIndex)) {
+    //when you click out side of te tab
+    // if it's not a number return
+    return;
+  }
+  tabAudio.play();
   // get the array of months and send it to display
   display.paintMonthTabs(
     mapOutKey("name", arrayOfYearObjs[yearIndex].arrayOfMonthObjects)
@@ -410,6 +474,13 @@ el.monthList.addEventListener("click", e => {
   index = parseInt(index);
   monthIndex = index;
 
+  // Bug fix
+  if (isNaN(monthIndex)) {
+    //when you click out side of te tab
+    // if it's not a number return
+    return;
+  }
+  tabAudio.play();
   // get the array of Transactions and send it to display
   display.paintTransactions(
     arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
@@ -419,16 +490,41 @@ el.monthList.addEventListener("click", e => {
 
 // transaction form
 document.querySelector("#clear").addEventListener("click", e => {
+  btnAudio.play();
   storeItem.value = "";
   price.value = "";
 });
 
 document.querySelector("#transactionBtn").addEventListener("click", e => {
   e.preventDefault();
-  let date = document.querySelector("#date").value;
-  let storeItem = document.querySelector("#storeItem").value;
-  let price = document.querySelector("#price").value;
+  let date = document.querySelector("#date").value.trim();
+  let storeItem = document.querySelector("#storeItem").value.trim();
+  let price = document.querySelector("#price").value.trim();
+
+  if (date === "") {
+    warningEmptyAudio.play();
+    display.showAlert("Please enter a date.", "error");
+    return;
+  }
+
+  if (storeItem === "") {
+    warningEmptyAudio.play();
+    display.showAlert("Please enter a store or item.", "error");
+    return;
+  }
+
+  if (price === "") {
+    warningEmptyAudio.play();
+    display.showAlert("Please enter a price", "error");
+    return;
+  }
   price = Number(price);
+
+  if (isNaN(price)) {
+    warningNameTakenAudio.play();
+    display.showAlert("Please enter a number for the price!", "error");
+    return;
+  }
   let newTransaction;
   if (taxBox.checked) {
     // create transaction with tax
@@ -439,6 +535,7 @@ document.querySelector("#transactionBtn").addEventListener("click", e => {
     // create transaction without tax
     newTransaction = new Transaction(date, storeItem, price);
   }
+  addAudio.play();
   // push new transaction into array
   arrayOfYearObjs[yearIndex].arrayOfMonthObjects[
     monthIndex
@@ -453,15 +550,24 @@ document.querySelector("#transactionBtn").addEventListener("click", e => {
 });
 
 document.querySelector("#transactionList").addEventListener("click", e => {
-  console.log("ul clicked");
   // event delegation
   if (e.target.classList.contains("deleteTrans")) {
-    // get the index from the html
+    if (!e.ctrlKey) {
+      warningNameTakenAudio.play();
+      display.showAlert(
+        "Please hold down control and click to delete",
+        "error"
+      );
+      return;
+    }
+
     if (e.ctrlKey) {
       console.log("control key down");
+      deleteAudio.play();
+      // get the index from the html
       let Index = e.target.parentElement.parentElement.dataset.index;
       let deleteIndex = parseInt(Index);
-      console.log(deleteIndex);
+
       // delete transaction
       arrayOfYearObjs[yearIndex].arrayOfMonthObjects[
         monthIndex
@@ -474,5 +580,130 @@ document.querySelector("#transactionList").addEventListener("click", e => {
           .arrayOfTransactions
       );
     }
+  }
+});
+
+// ***********************************************************
+// settings
+// *************************************************************
+// when You click on save settings Btn
+document.querySelector("#settingsSave").addEventListener("click", e => {
+  e.preventDefault();
+
+  // get form data to create a settings object
+  // get the taxRate
+  let taxRate = document.querySelector("#taxRate").value;
+  taxRate = Number(taxRate);
+  // fontsize radio code
+  let fontSizeValue = getRadioValue(el.settingsForm, "fontSize");
+  let settingsStorage = new SettingsStorage();
+  let settingsObj = new SettingsObj();
+  // set the object values
+  settingsObj.taxRate = taxRate;
+  settingsObj.fontSize = fontSizeValue;
+  settingsObj.filePathArray = settingsArrayContainer;
+  // set auto load true or false
+  let y = document.querySelector("#autoLoad").checked;
+  if (y === true) {
+    settingsObj.autoLoad = true;
+  } else {
+    settingsObj.autoLoad = false;
+  }
+  // save the object
+  settingsStorage.saveSettings(settingsObj);
+  addAudio.play();
+  // reset form
+  el.settingsForm.reset();
+  if (settingsObj.autoLoad) {
+    // clear two arrays
+    // setting the length to Zero emptys the array
+    arrayOfYearObjs.length = 0;
+    settingsArrayContainer.length = 0;
+    display.displayNone(el.settingsForm);
+    startUp();
+  } else {
+    // let settings = settingsStorage.getSettingsFromFile();
+    applySettings(settingsObj);
+    // hide form
+    display.displayNone(el.settingsForm);
+    // redisplay
+    // get the names for all the years
+    // and then send them to the Display
+    display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
+    return;
+  }
+}); // End
+
+// when You click on settings form cancel Btn
+document.querySelector("#settingsCancel").addEventListener("click", e => {
+  cancelAudio.play();
+  // hide form
+  display.displayNone(el.settingsForm);
+  // redisplay
+  // get the names for all the years
+  // and then send them to the Display
+  display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
+  return;
+});
+
+// when You click on settings form factory reset btn
+document.querySelector("#factoryReset").addEventListener("click", e => {
+  btnAudio.play();
+  let settingsStorage = new SettingsStorage();
+  settingsStorage.clearFileFromLocalStorage();
+  loadUpSettingsForm();
+});
+
+// When You click on settings form add path to autoload Btn
+document.querySelector("#settingsAddPath").addEventListener("click", e => {
+  e.preventDefault();
+  let yearObjPath;
+
+  let myOptions = {
+    filters: [{ name: "Custom File Type", extensions: ["deb"] }]
+  };
+  dialog.showOpenDialog(null, myOptions, fileNames => {
+    if (fileNames === undefined) {
+      display.showAlert("No file selected", "error");
+    } else {
+      // got file name
+      yearObjPath = fileNames[0];
+
+      // check if the fileNamePath already exists if it does alert and return
+      // make a variable to return
+      let isTaken = false;
+      settingsArrayContainer.forEach(element => {
+        if (element === yearObjPath) {
+          isTaken = true;
+        }
+      });
+      if (isTaken) {
+        warningNameTakenAudio.play();
+        display.showAlert("That file is already loaded", "error");
+        return;
+      }
+
+      // add it too tempHOld
+      settingsArrayContainer.push(yearObjPath);
+      addImageAudio.play();
+      // update Form
+      display.showAutoLoadList(settingsArrayContainer);
+    }
+  });
+});
+
+// when You click on x to delete a file path
+document.querySelector("#autoLoadList").addEventListener("click", e => {
+  e.preventDefault();
+  // event delegation
+  if (e.target.classList.contains("deleteFile")) {
+    // this gets the data I embedded into the html
+    let dataIndex = e.target.parentElement.parentElement.dataset.index;
+    let deleteIndex = parseInt(dataIndex);
+    // delete path
+    settingsArrayContainer.splice(deleteIndex, 1);
+    warningSelectAudio.play();
+    // update Form
+    display.showAutoLoadList(settingsArrayContainer);
   }
 });

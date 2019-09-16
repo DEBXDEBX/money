@@ -17,7 +17,8 @@ class Display {
     // Get parent
     const container = document.querySelector("body");
     // Insert alert other element
-    container.insertBefore(div, this.elements.transactionHeading);
+    container.insertBefore(div, this.elements.myForm);
+    // container.insertBefore(div, this.elements.transactionHeading);
     // Timeout after 4 sec
     setTimeout(function() {
       document.querySelector(".alert").remove();
@@ -57,6 +58,8 @@ class Display {
     this.displayNone(this.elements.transactionList);
     this.displayNone(this.elements.totalH1);
     this.displayNone(this.elements.myForm);
+    this.displayBlock(this.elements.yearHeading);
+    this.displayBlock(this.elements.yearList);
     this.clearYearDisplay();
 
     // this will paint all year tabs

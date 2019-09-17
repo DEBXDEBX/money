@@ -12,17 +12,16 @@
   },
   "author": "David E. Berkheimer",
   "license": "ISC",
-  "dependencies": {
-    "electron": "^6.0.7"
-  },
+  "dependencies": {},
   "build": {
-    "appId": "com.deb.Money",
+    "appId": "com.deb.momsmoney",
     "win": {
       "target": "nsis",
       "icon": "build/icon.ico"
     }
   },
   "devDependencies": {
+    "electron": "^6.0.9",
     "electron-builder": "^21.2.0"
   }
 }

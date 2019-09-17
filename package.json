@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "pack": "build --dir",
     "electron": "electron .",
     "electronConsole": ".\\node_modules\\electron\\dist\\electron.exe .",
-    "start": ".\\node_modules\\electron\\dist\\electron.exe .",
-    "dist": "build"
+    "startC": ".\\node_modules\\electron\\dist\\electron.exe ."
   },
   "author": "David E. Berkheimer",
   "license": "ISC",
   "dependencies": {},
   "build": {
-    "appId": "com.deb.momsmoney",
+    "appId": "com.deb.moneylog",
+    "productName": "Money Log",
     "win": {
       "target": "nsis",
       "icon": "build/icon.ico"

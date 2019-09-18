@@ -183,7 +183,8 @@ function readFileContents(filepath) {
           display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
           return;
         } else {
-          let message = "This is not a valid ElectronFileCab2019April file";
+          let message =
+            "This is not a valid ElectronMomMoney2019September file";
           let msgType = "error";
           display.showAlert(message, msgType);
         }

@@ -61,8 +61,10 @@ ipcMain.on("year:add", (event, name) => {
   let myOptions = {
     filters: [{ name: "Custom File Type", extensions: ["deb"] }]
   };
+
   // open save dialog to create a fileNamePath
-  dialog.showSaveDialog(null, myOptions, fileNamePath => {
+  dialog.showSaveDialog(mainWindow, myOptions, fileNamePath => {
+    console.log(fileNamePath);
     // send all info in an object to script.js
     mainWindow.webContents.send("year:add", { fileNamePath, name });
   });
@@ -165,21 +167,6 @@ function showSettingsForm() {
 function setFontSize(fontSize) {
   mainWindow.webContents.send("FontSize:change", fontSize);
 } // End setFontSize(fontSize)
-
-// this listens for the addWindow
-ipcMain.on("fileCab:add", (event, name) => {
-  // close the addWindow
-  addWindow.close();
-  // this is for extsions
-  let myOptions = {
-    filters: [{ name: "Custom File Type", extensions: ["deb"] }]
-  };
-  // open save dialog to create a fileNamePath
-  dialog.showSaveDialog(null, myOptions, fileNamePath => {
-    // send all info in an object to script.js
-    mainWindow.webContents.send("fileCab:add", { fileNamePath, name });
-  });
-}); // End ipcMain.on("fileCab:add"
 
 // Top Menu
 const menuTemplate = [

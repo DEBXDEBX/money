@@ -129,6 +129,13 @@ function autoLoadYearObjects(array) {
 }
 
 function readFileContents(filepath) {
+  if (!filepath) {
+    let message = "No file selected";
+    let msgType = "error";
+    display.showAlert(message, msgType);
+    return;
+  }
+
   fs.readFile(filepath, "utf-8", (err, data) => {
     if (err) {
       let message = "An error occured reading the file.";
@@ -280,8 +287,24 @@ ipcRenderer.on("Display:showAlert", (event, dataObj) => {
 
 // listen for inedex.js to send data
 ipcRenderer.on("year:add", (event, dataObj) => {
+  if (!dataObj.fileNamePath) {
+    display.showAlert("You did not enter a path!", "error");
+    // redisplay
+    // get the names for all the years
+    // and then send them to the Display
+    display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
+    return;
+  }
   if (dataObj.name === "") {
     display.showAlert("You did not enter a name for the Year!", "error");
+    // redisplay
+    // get the names for all the years
+    // and then send them to the Display
+    display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
+    return;
+  }
+  if (isNaN(Number(dataObj.name))) {
+    display.showAlert("You did not enter a number for the Year!", "error");
     // redisplay
     // get the names for all the years
     // and then send them to the Display
@@ -664,7 +687,7 @@ document.querySelector("#settingsAddPath").addEventListener("click", e => {
     filters: [{ name: "Custom File Type", extensions: ["deb"] }]
   };
   dialog.showOpenDialog(null, myOptions, fileNames => {
-    if (fileNames === undefined) {
+    if (fileNames === undefined || fileNames.length === 0) {
       display.showAlert("No file selected", "error");
     } else {
       // got file name

@@ -9,7 +9,8 @@ class Elements {
     this.monthHeading = document.querySelector("#monthHeading");
     this.transactionHeading = document.querySelector("#transactionHeading");
     // total h1
-    this.totalH1 = document.querySelector("#totalH1");
+    this.topTotalDiv = document.querySelector("#topTotalDiv");
+    this.bottomTotalDiv = document.querySelector("#bottomTotalDiv");
     // // select forms
     this.myForm = document.querySelector("#myForm");
     this.settingsForm = document.querySelector("#settingsForm");

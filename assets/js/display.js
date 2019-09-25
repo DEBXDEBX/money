@@ -104,8 +104,10 @@ class Display {
   //Method
   paintTransactions(transactionArray) {
     this.clearTransactionDisplay();
-    this.displayNone(this.elements.totalH1);
+    this.displayNone(this.elements.topTotalDiv);
+    this.displayNone(this.elements.bottomTotalDiv);
     this.displayNone(this.elements.myForm);
+    this.displayNone(this.elements.transactionList);
     this.displayNone(this.elements.transactionHeading);
     this.displayBlock(this.elements.totalH1);
     this.displayBlock(this.elements.transactionHeading);
@@ -146,8 +148,17 @@ class Display {
     // paint transactions
     this.elements.transactionList.innerHTML = html;
     this.displayBlock(this.elements.transactionList);
-    this.elements.totalH1.innerHTML = `Total = $${totalPrice.toFixed(2)}`;
-    this.displayBlock(this.elements.totalH1);
+    let totalHtml = "";
+    if (totalPrice <= 0) {
+      totalHtml = `<h1 class = "red" >$${totalPrice.toFixed(2)}</h1>`;
+    } else {
+      totalHtml = `<h1 class = "normal" >$${totalPrice.toFixed(2)}</h1>`;
+    }
+    this.elements.topTotalDiv.innerHTML = totalHtml;
+
+    this.elements.bottomTotalDiv.innerHTML = totalHtml;
+    this.displayBlock(this.elements.topTotalDiv);
+    this.displayBlock(this.elements.bottomTotalDiv);
   } // End paintTransactions(transactionArray)
 
   //Method

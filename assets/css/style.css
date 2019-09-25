@@ -18,15 +18,19 @@ a {
 /* Create Variables */
 :root {
   --primary-color: #0f0;
-  --secondary-color: #00f;
 }
 /* use Variables */
 h1 {
   color: var(--primary-color);
-  text-shadow: 2px 2px var(--secondary-color);
+  text-shadow: 2px 2px black;
   text-align: center;
 }
-
+.red {
+  color: red;
+}
+.normal {
+  color: #0f0;
+}
 h6 {
   margin: 10px;
   text-align: center;

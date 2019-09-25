@@ -89,11 +89,25 @@
       </nav>
     </section>
 
+    <div id="topTotalDiv">
+    
+    </div>
 
+    <h6 id="transactionHeading">Transactions</h6>
+
+    <nav>
+      <ul id="transactionList"></ul>
+    </nav>
+
+    <div id="bottomTotalDiv">
+   
+    </div>
 
     <form id="myForm">
       <div class="form-group">
+        <label  for="date">Date</label>
         <input
+        name="date"
           id="date"
           type="text"
           autofocus
@@ -103,17 +117,21 @@
       </div>
 
       <div class="form-group">
+          <label  for="storeItem">Store / Item</label>
         <input
+        name="storeItem"
           id="storeItem"
           type="text"
           autofocus
           class="form-control"
-          placeholder="Store/Item"
+          placeholder="Store / Item"
         />
       </div>
 
       <div class="form-group">
+          <label  for="storeItem">Price</label>
         <input
+        name="price"
           id="price"
           type="text"
           autofocus
@@ -142,15 +160,11 @@
       </div>
     </form>
 
-    <h6 id="transactionHeading">Transactions</h6>
+ 
 
-    <nav>
-      <ul id="transactionList"></ul>
-    </nav>
+   
 
-    <div id="totalDiv">
-      <h1 id="totalH1"></h1>
-    </div>
+    
     
     <form id="settingsForm">
       <!-- Theme -->

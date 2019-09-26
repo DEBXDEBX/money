@@ -100,7 +100,7 @@ function loadYear() {
     filters: [{ name: "Custom File Type", extensions: ["deb"] }]
   };
   dialog.showOpenDialog(null, myOptions, fileNames => {
-    if (fileNames === undefined) {
+    if (!fileNames) {
       let message = "No file selected";
       let msgType = "error";
       mainWindow.webContents.send("Display:showAlert", { message, msgType });
@@ -270,21 +270,21 @@ if (process.platform === "darwin") {
 //This does not work comment it out before you build
 
 //DEVELOPER TOOLS
-if (process.env.NODE_ENV !== "production") {
-  // add object to end of array menu
-  menuTemplate.push({
-    label: "View",
-    submenu: [
-      //predefined role
-      { role: "reload" },
-      {
-        label: "Toggle Developer Tools",
-        accelerator:
-          process.platform === "darwin" ? "Command+Alt+I" : "Ctrl+Shift+I",
-        click(item, focusedWindow) {
-          focusedWindow.toggleDevTools();
-        }
-      }
-    ]
-  });
-}
+// if (process.env.NODE_ENV !== "production") {
+//   // add object to end of array menu
+//   menuTemplate.push({
+//     label: "View",
+//     submenu: [
+//       //predefined role
+//       { role: "reload" },
+//       {
+//         label: "Toggle Developer Tools",
+//         accelerator:
+//           process.platform === "darwin" ? "Command+Alt+I" : "Ctrl+Shift+I",
+//         click(item, focusedWindow) {
+//           focusedWindow.toggleDevTools();
+//         }
+//       }
+//     ]
+//   });
+// }

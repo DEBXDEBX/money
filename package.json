@@ -9,7 +9,7 @@
     "pack": "build --dir",
     "electron": "electron .",
     "electronConsole": ".\\node_modules\\electron\\dist\\electron.exe .",
-    "startC": ".\\node_modules\\electron\\dist\\electron.exe ."
+    "debx": ".\\node_modules\\electron\\dist\\electron.exe ."
   },
   "author": "David E. Berkheimer",
   "license": "ISC",

@@ -79,6 +79,8 @@ class Display {
   paintMonthTabs(mapedArray) {
     this.clearMonthDisplay();
     this.clearTransactionDisplay();
+    this.displayNone(this.elements.topTotalDiv);
+    this.displayNone(this.elements.bottomTotalDiv);
     this.displayNone(this.elements.transactionHeading);
     this.displayNone(this.elements.transactionList);
     this.displayNone(this.elements.totalH1);
@@ -190,6 +192,8 @@ class Display {
   //Method
   showSettingsForm() {
     //  hide everything
+    this.displayNone(this.elements.topTotalDiv);
+    this.displayNone(this.elements.bottomTotalDiv);
     this.displayNone(this.elements.yearList);
     this.displayNone(this.elements.monthList);
     this.displayNone(this.elements.transactionList);

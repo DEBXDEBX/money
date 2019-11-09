@@ -13,9 +13,11 @@ must do later
 image C:\Users\David\Desktop\GitHub\FileCab\build\icon.ico must be at least 256x256
 get rid of developer tools before you build
 
-to build
-type in command line interface
-npm run dist
+to build type in terminal:
+
+electron-builder build -w => the w is for windows after you run
+
+this command look in dist folder for your .exe file to run
 There is a new folder in your project called dist
 clicking on the filecab setup 10.0.0exe will install the program on your computer.
 

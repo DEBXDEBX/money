@@ -368,7 +368,6 @@ ipcRenderer.on("year:add", (event, dataObj) => {
   // write the year object to disk
   newYear.writeYearToHardDisk(fs);
 
-  display.hideSettingsForm();
   // redisplay
   // get the names for all the years
   // and then send them to the Display
@@ -430,7 +429,6 @@ ipcRenderer.on("yearObj:load", (event, data) => {
   // write the year object to disk
   newYear.writeYearToHardDisk(fs);
 
-  display.hideSettingsForm();
   // redisplay
   // get the names for all the years
   // and then send them to the Display

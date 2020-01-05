@@ -192,6 +192,10 @@ class Display {
   } // End colorSetOfTabs(tabList)
 
   //Method
+  hideSettingsForm() {
+    this.displayNone(this.elements.settingsForm);
+  }
+  //Method
   showSettingsForm() {
     //  hide everything
     this.displayNone(this.elements.topTotalDiv);

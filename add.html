@@ -74,7 +74,6 @@
       const { ipcRenderer } = electron;
 
       document.querySelector("form").addEventListener("submit", event => {
-        console.log("clicked submit");
         event.preventDefault();
         let { value } = document.querySelector("#name");
         value = value.trim();
@@ -82,7 +81,6 @@
       });
 
       document.querySelector("#cancel").addEventListener("click", event => {
-        console.log("clicked cancel");
         ipcRenderer.send("addForm:cancel");
       });
     </script>

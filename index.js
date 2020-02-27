@@ -59,7 +59,6 @@ ipcMain.on("year:add", (event, name) => {
   addWindow.close();
   // Set fileName to name
   // filter for .deb extensions
-
   let myOptions = {
     defaultPath: name,
     filters: [{ name: "Custom File Type", extensions: ["deb"] }]
@@ -100,7 +99,8 @@ function loadYear() {
   console.log("Start loading year....");
   // this is for extsions
   let myOptions = {
-    filters: [{ name: "Custom File Type", extensions: ["deb"] }]
+    filters: [{ name: "Custom File Type", extensions: ["deb"] }],
+    properties: ["openFile", "multiSelections"]
   };
   dialog.showOpenDialog(null, myOptions, fileNames => {
     if (!fileNames) {
@@ -108,7 +108,8 @@ function loadYear() {
       let msgType = "error";
       mainWindow.webContents.send("Display:showAlert", { message, msgType });
     } else {
-      readFileContents(fileNames[0]);
+      // readFileContents(fileNames[0]);
+      fileNames.forEach(file => readFileContents(file));
     }
   });
 
@@ -273,21 +274,21 @@ if (process.platform === "darwin") {
 //This does not work comment it out before you build
 
 //DEVELOPER TOOLS
-if (process.env.NODE_ENV !== "production") {
-  // add object to end of array menu
-  menuTemplate.push({
-    label: "View",
-    submenu: [
-      //predefined role
-      { role: "reload" },
-      {
-        label: "Toggle Developer Tools",
-        accelerator:
-          process.platform === "darwin" ? "Command+Alt+I" : "Ctrl+Shift+I",
-        click(item, focusedWindow) {
-          focusedWindow.toggleDevTools();
-        }
-      }
-    ]
-  });
-}
+// if (process.env.NODE_ENV !== "production") {
+//   // add object to end of array menu
+//   menuTemplate.push({
+//     label: "View",
+//     submenu: [
+//       //predefined role
+//       { role: "reload" },
+//       {
+//         label: "Toggle Developer Tools",
+//         accelerator:
+//           process.platform === "darwin" ? "Command+Alt+I" : "Ctrl+Shift+I",
+//         click(item, focusedWindow) {
+//           focusedWindow.toggleDevTools();
+//         }
+//       }
+//     ]
+//   });
+// }

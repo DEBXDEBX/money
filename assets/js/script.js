@@ -441,17 +441,6 @@ ipcRenderer.on("yearObj:load", (event, data) => {
 //*************************************************** */
 
 el.yearList.addEventListener("click", (e) => {
-  // get the index from the html
-  let index = e.target.dataset.index;
-  index = parseInt(index);
-
-  // Bug fix
-  if (isNaN(index)) {
-    //when you click out side of te tab
-    // if it's not a number return
-    return;
-  }
-  yearIndex = index;
   // event delegation
   if (e.target.classList.contains("year")) {
     // set's the current target active
@@ -467,27 +456,27 @@ el.yearList.addEventListener("click", (e) => {
         el[i].className = "year active";
       };
     }
-  } // End code to set the active class
+    // get the index from the html
+    let index = e.target.dataset.index;
+    index = parseInt(index);
 
-  tabAudio.play();
-  // get the array of months and send it to display
-  display.paintMonthTabs(
-    mapOutKey("name", arrayOfYearObjs[yearIndex].arrayOfMonthObjects)
-  );
+    // Bug fix
+    if (isNaN(index)) {
+      //when you click out side of te tab
+      // if it's not a number return
+      return;
+    }
+    yearIndex = index;
+    tabAudio.play();
+    // get the array of months and send it to display
+    display.paintMonthTabs(
+      mapOutKey("name", arrayOfYearObjs[yearIndex].arrayOfMonthObjects)
+    );
+    return;
+  } // End code to set the active class
 }); // End el.yearList.addEventListener()
 
 el.monthList.addEventListener("click", (e) => {
-  // get the index from the html
-  let index = e.target.dataset.index;
-  index = parseInt(index);
-
-  // Bug fix
-  if (isNaN(index)) {
-    //when you click out side of te tab
-    // if it's not a number return
-    return;
-  }
-  monthIndex = index;
   // event delegation
   if (e.target.classList.contains("month")) {
     // set's the current target active
@@ -503,14 +492,26 @@ el.monthList.addEventListener("click", (e) => {
         el[i].className = "month active";
       };
     }
-  } // End code to set the active class
+    // get the index from the html
+    let index = e.target.dataset.index;
+    index = parseInt(index);
 
-  tabAudio.play();
-  // get the array of Transactions and send it to display
-  display.paintTransactions(
-    arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
-      .arrayOfTransactions
-  );
+    // Bug fix
+    if (isNaN(index)) {
+      //when you click out side of te tab
+      // if it's not a number return
+      return;
+    }
+
+    monthIndex = index;
+    tabAudio.play();
+    // get the array of Transactions and send it to display
+    display.paintTransactions(
+      arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
+        .arrayOfTransactions
+    );
+    return;
+  } // End code to set the active class
 });
 
 // transaction form

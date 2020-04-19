@@ -85,6 +85,26 @@ function startUp() {
 //*************************************************** */
 // Helper functions
 //*************************************************** */
+function pushFileSettingsContainer(filePath) {
+  // check if the fileNamePath already exists if it does alert and return
+  // make a variable to return
+  let isTaken = false;
+  settingsArrayContainer.forEach((element) => {
+    if (element === filePath) {
+      isTaken = true;
+    }
+  });
+  if (isTaken) {
+    // warningNameTakenAudio.play();
+    warningNameTakenAudio.play();
+    display.showAlert("That file is already loaded", "error");
+    return;
+  }
+
+  // add it too tempHOld
+  settingsArrayContainer.push(filePath);
+}
+
 // Sort an array by it's name
 function sortArrayByName(array) {
   array.sort(function (a, b) {
@@ -689,34 +709,25 @@ document.querySelector("#factoryReset").addEventListener("click", (e) => {
 // When You click on settings form add path to autoload Btn
 document.querySelector("#settingsAddPath").addEventListener("click", (e) => {
   e.preventDefault();
-  let yearObjPath;
-
+  // this is for extsions
   let myOptions = {
-    filters: [{ name: "Custom File Type", extensions: ["deb"] }],
+    filters: [
+      {
+        name: "Custom File Type",
+        extensions: ["deb"],
+      },
+    ],
+    properties: ["openFile", "multiSelections"],
   };
+
   dialog.showOpenDialog(null, myOptions, (fileNames) => {
     if (fileNames === undefined || fileNames.length === 0) {
       display.showAlert("No file selected", "error");
     } else {
       // got file name
-      yearObjPath = fileNames[0];
-
-      // check if the fileNamePath already exists if it does alert and return
-      // make a variable to return
-      let isTaken = false;
-      settingsArrayContainer.forEach((element) => {
-        if (element === yearObjPath) {
-          isTaken = true;
-        }
-      });
-      if (isTaken) {
-        warningNameTakenAudio.play();
-        display.showAlert("That file is already loaded", "error");
-        return;
+      for (let filePath of fileNames) {
+        pushFileSettingsContainer(filePath);
       }
-
-      // add it too tempHOld
-      settingsArrayContainer.push(yearObjPath);
       addImageAudio.play();
       // update Form
       display.showAutoLoadList(settingsArrayContainer);

@@ -539,6 +539,7 @@ document.querySelector("#clear").addEventListener("click", (e) => {
   btnAudio.play();
   storeItem.value = "";
   price.value = "";
+  storeItem.focus();
 });
 
 document.querySelector("#transactionBtn").addEventListener("click", (e) => {
@@ -546,7 +547,7 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
   let date = document.querySelector("#date").value.trim();
   let storeItem = document.querySelector("#storeItem").value.trim();
   let price = document.querySelector("#price").value.trim();
-
+  document.querySelector("#storeItem").focus();
   if (date === "") {
     warningEmptyAudio.play();
     display.showAlert("Please enter a date.", "error");

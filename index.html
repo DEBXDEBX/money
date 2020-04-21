@@ -10,8 +10,6 @@
     <meta name="description" content="This is my website description" />
     <meta name="keywords" content="web development, web design" />
 
-    
-
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -26,7 +24,7 @@
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
-
+    <!-- font awesome  -->
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -40,34 +38,33 @@
     <title>Money Log</title>
   </head>
   <body>
-
-      <audio id="addAudio">
-          <source src="assets/sound/add.wav" type="audio/wav" />
-        </audio>
-        <audio id="addImageAudio">
-          <source src="assets/sound/addImage.wav" type="audio/wav" />
-        </audio>
-        <audio id="deleteAudio">
-          <source src="assets/sound/delete.wav" type="audio/wav" />
-        </audio>
-        <audio id="warningEmptyAudio">
-          <source src="assets/sound/warningEmpty.wav" type="audio/wav" />
-        </audio>
-        <audio id="warningSelectAudio">
-          <source src="assets/sound/warningSelect.wav" type="audio/wav" />
-        </audio>
-        <audio id="warningNameTakenAudio">
-          <source src="assets/sound/warningNameTaken.wav" type="audio/wav" />
-        </audio>
-        <audio id="tabAudio">
-          <source src="assets/sound/tab.wav" type="audio/wav" />
-        </audio>
-        <audio id="btnAudio">
-          <source src="assets/sound/btn.wav" type="audio/wav" />
-        </audio>
-        <audio id="cancelAudio">
-          <source src="assets/sound/cancel.wav" type="audio/wav" />
-        </audio>
+    <audio id="addAudio">
+      <source src="assets/sound/add.wav" type="audio/wav" />
+    </audio>
+    <audio id="addImageAudio">
+      <source src="assets/sound/addImage.wav" type="audio/wav" />
+    </audio>
+    <audio id="deleteAudio">
+      <source src="assets/sound/delete.wav" type="audio/wav" />
+    </audio>
+    <audio id="warningEmptyAudio">
+      <source src="assets/sound/warningEmpty.wav" type="audio/wav" />
+    </audio>
+    <audio id="warningSelectAudio">
+      <source src="assets/sound/warningSelect.wav" type="audio/wav" />
+    </audio>
+    <audio id="warningNameTakenAudio">
+      <source src="assets/sound/warningNameTaken.wav" type="audio/wav" />
+    </audio>
+    <audio id="tabAudio">
+      <source src="assets/sound/tab.wav" type="audio/wav" />
+    </audio>
+    <audio id="btnAudio">
+      <source src="assets/sound/btn.wav" type="audio/wav" />
+    </audio>
+    <audio id="cancelAudio">
+      <source src="assets/sound/cancel.wav" type="audio/wav" />
+    </audio>
 
     <h1>Money Log</h1>
     <header>
@@ -89,9 +86,7 @@
       </nav>
     </section>
 
-    <div id="topTotalDiv">
-    
-    </div>
+    <div id="topTotalDiv"></div>
 
     <h6 id="transactionHeading">Transactions</h6>
 
@@ -99,27 +94,24 @@
       <ul id="transactionList"></ul>
     </nav>
 
-    <div id="bottomTotalDiv">
-   
-    </div>
+    <div id="bottomTotalDiv"></div>
 
     <form id="myForm">
       <div class="form-group">
-        <label  for="date">Date</label>
+        <label for="date">Date</label>
         <input
-        name="date"
+          name="date"
           id="date"
           type="text"
-        
           class="form-control"
           placeholder="Date"
         />
       </div>
 
       <div class="form-group">
-          <label  for="storeItem">Store / Item</label>
+        <label for="storeItem">Store / Item</label>
         <input
-        name="storeItem"
+          name="storeItem"
           id="storeItem"
           type="text"
           autofocus
@@ -129,12 +121,11 @@
       </div>
 
       <div class="form-group">
-          <label  for="storeItem">Price</label>
+        <label for="storeItem">Price</label>
         <input
-        name="price"
+          name="price"
           id="price"
           type="text"
-        
           class="form-control"
           placeholder="Price"
         />
@@ -160,63 +151,68 @@
       </div>
     </form>
 
- 
-
-   
-
-    
-    
     <form id="settingsForm">
       <!-- Theme -->
       <div class="form-group setFlex">
-    
-          <label for="taxRate">Tax Rate</label>
+        <label for="taxRate">Tax Rate</label>
 
-          <div class="form-group">
-            <input
-              id="taxRate"
-              name="taxRate"
-              type="text"
-              autofocus
-              class="form-control"
-              placeholder="Tax Rate"
-            />
-          </div>
+        <div class="form-group">
+          <input
+            id="taxRate"
+            name="taxRate"
+            type="text"
+            autofocus
+            class="form-control"
+            placeholder="Tax Rate"
+          />
         </div>
-   
+      </div>
 
       <!-- Font Size -->
       <div class="form-group setFlex">
-      <label for="fontSize">Pick a font size</label>
+        <label for="fontSize">Pick a font size</label>
+        <div>
+          <input id="x-small" type="radio" name="fontSize" value="x-small" />
+          x-small
+          <input id="small" type="radio" name="fontSize" value="small" /> small
+          <input
+            id="normal"
+            type="radio"
+            name="fontSize"
+            value="normal"
+            checked
+          />
+          normal
+          <input id="large" type="radio" name="fontSize" value="large" /> large
+          <input id="x-large" type="radio" name="fontSize" value="x-large" />
+          x-large
+        </div>
+      </div>
+
+      <div><input id="autoLoad" type="checkbox" /> Auto Load Year's</div>
+
       <div>
-      <input id="x-small" type="radio" name="fontSize" value="x-small" > x-small
-      <input id="small" type="radio" name="fontSize" value="small"> small
-      <input id="normal" type="radio" name="fontSize" value="normal" checked> normal
-      <input id="large" type="radio" name="fontSize" value="large"> large
-      <input id="x-large" type="radio" name="fontSize" value="x-large" > x-large
-    </div>
-  </div>
-  </div>
-    <div> <input id="autoLoad" type="checkbox" > Auto Load Year's</div>
-<div>
-</div>
+        <ol type="1" id="autoLoadList">
+          <!-- this is were the paths get displayed  -->
+        </ol>
+      </div>
 
-<div class="setAutoListFlex" ><ol type="1" id="autoLoadList">
-<!-- this is were the paths get displayed  -->
-</ol></div>
-
-<div class="form-group">
-    <button class="btn btn-primary form-control" id="settingsAddPath" type="button">Add File To Auto Load List</button>
-</div>
       <div class="form-group">
-      <input
+        <button
+          class="btn btn-primary form-control"
+          id="settingsAddPath"
+          type="button"
+        >
+          Add File To Auto Load List
+        </button>
+      </div>
+      <div class="form-group">
+        <input
           id="settingsSave"
           class="btn btn-success form-control"
           type="submit"
           value="Save Settings"
         />
-
-      </div>
       </div>
 
       <div class="form-group">

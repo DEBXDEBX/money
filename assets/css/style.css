@@ -165,13 +165,6 @@ nav li.transaction:hover {
   padding: 2rem;
   border-radius: 22px;
 }
-
-.setAutoListFlex {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: start;
-  align-items: center;
-  padding: 2rem;
-  border-radius: 22px;
+#autoLoadList {
+  margin-left: 45px;
 }

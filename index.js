@@ -54,7 +54,6 @@ function createYear() {
 
 // this listens for the add window
 ipcMain.on("year:add", (event, name) => {
-  console.log(name);
   // close the addWindow
   addWindow.close();
   // Set fileName to name
@@ -66,7 +65,6 @@ ipcMain.on("year:add", (event, name) => {
 
   // open save dialog to create a fileNamePath
   dialog.showSaveDialog(mainWindow, myOptions, (fileNamePath) => {
-    console.log(fileNamePath);
     // send all info in an object to script.js
     mainWindow.webContents.send("year:add", { fileNamePath, name });
   });
@@ -75,7 +73,6 @@ ipcMain.on("year:add", (event, name) => {
 // this listens for the addWindow cancel btn
 ipcMain.on("addForm:cancel", (event) => {
   addWindow.close();
-  console.log("cancel clicked");
 }); // End ipcMain.on("addForm:cancel"
 
 //When you click on help
@@ -96,7 +93,6 @@ function loadHelp() {
 
 //When You click on load year
 function loadYear() {
-  console.log("Start loading year....");
   // this is for extsions
   let myOptions = {
     filters: [{ name: "Custom File Type", extensions: ["deb"] }],
@@ -142,11 +138,9 @@ function loadYear() {
 
         if (data) {
           if (data.fileType === "ElectronMomMoney2019September") {
-            console.log("This is a valid file");
             // set filepath: This is in case you moved your file
             data.fileNamePath = filepath;
             // laod file cab
-            console.log("sending data to script.js");
             // data is an object to be converted to an file cab object
             mainWindow.webContents.send("yearObj:load", data);
           } else {

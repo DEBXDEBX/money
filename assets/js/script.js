@@ -1,21 +1,15 @@
 "use strict";
-// webPreferences: true sets up the require in the script js file electron version 5.0.0 and above
-// mainWindow = new BrowserWindow({
-//   webPreferences: {
-//     nodeIntegration: true
-//   }
-// });   index.js
 // Used to access file system
 let app = require("electron").remote;
 let { dialog } = app;
 let fs = require("fs");
 const electron = require("electron");
 const { ipcRenderer } = electron;
-//select form
+// Select form
 let storeItem = document.querySelector("#storeItem");
 let price = document.querySelector("#price");
 let taxBox = document.querySelector("#taxInput");
-//Select audio files
+// Select audio files
 const addAudio = document.querySelector("#addAudio");
 const addImageAudio = document.querySelector("#addImageAudio");
 const deleteAudio = document.querySelector("#deleteAudio");
@@ -25,7 +19,7 @@ const warningNameTakenAudio = document.querySelector("#warningNameTakenAudio");
 const tabAudio = document.querySelector("#tabAudio");
 const btnAudio = document.querySelector("#btnAudio");
 const cancelAudio = document.querySelector("#cancelAudio");
-//Global variable's
+// Global variable's
 // This is the Main array that holds all the year objects
 const arrayOfYearObjs = [];
 // create elements object
@@ -49,18 +43,7 @@ window.onload = function () {
   addDateToForm();
   startUp();
 };
-// addDateToForm
-function addDateToForm() {
-  let options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  let date = new Date();
 
-  document.querySelector("#date").value = date.toLocaleDateString();
-}
 //startUp
 function startUp() {
   //get data from settings obect
@@ -85,6 +68,19 @@ function startUp() {
 //*************************************************** */
 // Helper functions
 //*************************************************** */
+//
+function addDateToForm() {
+  let options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  let date = new Date();
+
+  document.querySelector("#date").value = date.toLocaleDateString();
+}
+//
 function pushFileSettingsContainer(filePath) {
   // check if the fileNamePath already exists if it does alert and return
   // make a variable to return
@@ -104,8 +100,7 @@ function pushFileSettingsContainer(filePath) {
   // add it too tempHOld
   settingsArrayContainer.push(filePath);
 }
-
-// Sort an array by it's name
+//
 function sortArrayByName(array) {
   array.sort(function (a, b) {
     var nameA = a.name.toUpperCase(); // ignore upper and lowercase
@@ -120,7 +115,7 @@ function sortArrayByName(array) {
     return 0;
   }); //End sort function
 }
-// get the value of the selected radio button
+//
 function getRadioValue(form, name) {
   var val;
   // get list of radio buttons with specified name
@@ -135,19 +130,20 @@ function getRadioValue(form, name) {
   }
   return val; // return value of checked radio or undefined if none checked
 }
-
+//
 function mapOutKey(key, array) {
   const newArray = array.map(function (item) {
     return item[key];
   });
   return newArray;
 }
+//
 function autoLoadYearObjects(array) {
   array.forEach(function (item) {
     readFileContents(item);
   });
 }
-
+//
 function readFileContents(filepath) {
   if (!filepath) {
     let message = "No file selected";
@@ -219,6 +215,7 @@ function readFileContents(filepath) {
     }
   });
 }
+//
 function loadUpSettingsForm() {
   let settingsStorage = new SettingsStorage();
   let settings = settingsStorage.getSettingsFromFile();
@@ -261,7 +258,7 @@ function loadUpSettingsForm() {
   // update autoload form ul
   display.showAutoLoadList(settingsArrayContainer);
 } // End loadUpSettingsForm()
-
+//
 function applySettings(settings) {
   if (settings.autoLoad === true) {
     document.querySelector("#autoLoad").checked = true;
@@ -290,10 +287,10 @@ function applySettings(settings) {
       console.log("No valid font-size");
   }
 } // End
-//************************************************ */
-// IPC
-//************************************************ */
 
+// *************************************************************
+//  IPC Code
+// *************************************************************
 // listen for index.js to show settings form
 ipcRenderer.on("SettingsForm:show", (event) => {
   loadUpSettingsForm();
@@ -458,8 +455,12 @@ ipcRenderer.on("yearObj:load", (event, data) => {
 //End ipcRenderer.on("year:load"*****************************
 // ***********************************************************
 
-//*************************************************** */
-
+// *************************************************************
+//  End IPC Code
+// *************************************************************
+// *************************************************************
+//  Year Code
+// *************************************************************
 el.yearList.addEventListener("click", (e) => {
   // event delegation
   if (e.target.classList.contains("year")) {
@@ -495,7 +496,12 @@ el.yearList.addEventListener("click", (e) => {
     return;
   } // End code to set the active class
 }); // End el.yearList.addEventListener()
-
+// *************************************************************
+//  End Year Code
+// *************************************************************
+// *************************************************************
+//  Month Code
+// *************************************************************
 el.monthList.addEventListener("click", (e) => {
   // event delegation
   if (e.target.classList.contains("month")) {
@@ -533,15 +539,60 @@ el.monthList.addEventListener("click", (e) => {
     return;
   } // End code to set the active class
 });
+// *************************************************************
+//  End Month Code
+// *************************************************************
+// *************************************************************
+//  Transaction Code
+// *************************************************************
+// Transaction UL
+document.querySelector("#transactionList").addEventListener("click", (e) => {
+  // get the index from the html
+  let index = e.target.parentElement.parentElement.dataset.index;
 
-// transaction form
+  // Bug fix
+  if (isNaN(index)) {
+    //when you click out side of te tab
+    // if it's not a number return
+    return;
+  }
+  let deleteIndex = parseInt(index);
+  // event delegation
+  if (e.target.classList.contains("deleteTrans")) {
+    if (!e.ctrlKey) {
+      warningNameTakenAudio.play();
+      display.showAlert(
+        "Please hold down control and click to delete",
+        "error"
+      );
+      return;
+    }
+
+    if (e.ctrlKey) {
+      deleteAudio.play();
+
+      // delete transaction
+      arrayOfYearObjs[yearIndex].arrayOfMonthObjects[
+        monthIndex
+      ].arrayOfTransactions.splice(deleteIndex, 1);
+      // save to disk
+      arrayOfYearObjs[yearIndex].writeYearToHardDisk(fs);
+      // get the array of Transactions and send it to display
+      display.paintTransactions(
+        arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
+          .arrayOfTransactions
+      );
+    }
+  }
+});
+// transaction form clear Btn
 document.querySelector("#clear").addEventListener("click", (e) => {
   btnAudio.play();
   storeItem.value = "";
   price.value = "";
   storeItem.focus();
 });
-
+// transaction form add Btn
 document.querySelector("#transactionBtn").addEventListener("click", (e) => {
   e.preventDefault();
   let date = document.querySelector("#date").value.trim();
@@ -595,49 +646,11 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
       .arrayOfTransactions
   );
 });
-
-document.querySelector("#transactionList").addEventListener("click", (e) => {
-  // get the index from the html
-  let index = e.target.parentElement.parentElement.dataset.index;
-
-  // Bug fix
-  if (isNaN(index)) {
-    //when you click out side of te tab
-    // if it's not a number return
-    return;
-  }
-  let deleteIndex = parseInt(index);
-  // event delegation
-  if (e.target.classList.contains("deleteTrans")) {
-    if (!e.ctrlKey) {
-      warningNameTakenAudio.play();
-      display.showAlert(
-        "Please hold down control and click to delete",
-        "error"
-      );
-      return;
-    }
-
-    if (e.ctrlKey) {
-      deleteAudio.play();
-
-      // delete transaction
-      arrayOfYearObjs[yearIndex].arrayOfMonthObjects[
-        monthIndex
-      ].arrayOfTransactions.splice(deleteIndex, 1);
-      // save to disk
-      arrayOfYearObjs[yearIndex].writeYearToHardDisk(fs);
-      // get the array of Transactions and send it to display
-      display.paintTransactions(
-        arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
-          .arrayOfTransactions
-      );
-    }
-  }
-});
-
+// *************************************************************
+//  End Transaction Code
+// *************************************************************
 // ***********************************************************
-// settings
+// Settings Code
 // *************************************************************
 // when You click on save settings Btn
 document.querySelector("#settingsSave").addEventListener("click", (e) => {
@@ -751,3 +764,6 @@ document.querySelector("#autoLoadList").addEventListener("click", (e) => {
     display.showAutoLoadList(settingsArrayContainer);
   }
 });
+// *************************************************************
+//  End Settings Code
+// *************************************************************

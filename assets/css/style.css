@@ -50,7 +50,7 @@ nav ul {
 nav ul li {
   list-style: none;
   background-color: #d0215cbd;
-  color: rgb(0, 0, 0);
+  color: black;
   padding: 3px 10px;
   margin: 4px 10px;
   border-radius: 10px 10px 0px 0px;
@@ -84,10 +84,6 @@ nav ul li:hover {
 .active {
   color: white;
 }
-/* #monthHeading,
-#transactionHeading {
-  display: none;
-} */
 #monthHeading,
 #transactionHeading,
 #myForm,

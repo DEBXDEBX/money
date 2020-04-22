@@ -128,6 +128,21 @@ nav li.transaction:nth-child(even) {
 nav li.transaction:hover {
   color: #e217a2;
 }
+input[type="radio"]:hover {
+  cursor: pointer;
+}
+input[type="checkbox"]:hover {
+  cursor: pointer;
+}
+.fas:hover {
+  cursor: pointer;
+}
+.year:hover {
+  cursor: pointer;
+}
+.month:hover {
+  cursor: pointer;
+}
 /* settings form  */
 #settingsForm {
   background-color: white;

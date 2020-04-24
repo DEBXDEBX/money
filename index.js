@@ -144,8 +144,7 @@ function loadYear() {
             // data is an object to be converted to an file cab object
             mainWindow.webContents.send("yearObj:load", data);
           } else {
-            let message =
-              "This is not a valid ElectronMomMoney2019September file";
+            let message = "This is not a valid Money Log file";
             let msgType = "error";
             mainWindow.webContents.send("Display:showAlert", {
               message,

@@ -61,26 +61,23 @@ nav ul li {
 nav ul li:hover {
   color: white;
 }
+/* CODE FOR MESSAGES  */
 .success,
 .error {
-  color: white;
+  background-color: black;
   padding: 20px;
   text-align: center;
-  width: 50%;
+  width: 100%;
   border-radius: 25px;
-  position: absolute;
-  left: 0;
-  right: 0;
   margin: auto;
 }
-
-.success {
-  background: green;
-}
-
 .error {
-  background: red;
+  color: red;
 }
+.success {
+  color: #2de11d;
+}
+/* END CODE FOR MESSAGES  */
 .active {
   color: white;
 }

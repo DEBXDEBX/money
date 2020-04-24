@@ -633,6 +633,7 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
     // create transaction without tax
     newTransaction = new Transaction(date, storeItem, price);
   }
+  display.showAlert("You added a transaction!", "success");
   addAudio.play();
   // push new transaction into array
   arrayOfYearObjs[yearIndex].arrayOfMonthObjects[

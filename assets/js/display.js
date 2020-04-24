@@ -8,20 +8,22 @@ class Display {
 
   // Method
   showAlert(message, className, displayTime = 4000) {
-    // Create div
-    const div = document.createElement("div");
-    // Add classes
-    div.className = `alert ${className}`;
-    // Add text
-    div.appendChild(document.createTextNode(message));
-    // Get parent
-    const container = document.querySelector("body");
-    // Insert alert other element
-    container.insertBefore(div, this.elements.myForm);
-    // container.insertBefore(div, this.elements.transactionHeading);
-    // Timeout after 4 sec
-    setTimeout(function() {
-      document.querySelector(".alert").remove();
+    if (className === "success") {
+      // remove error
+      this.elements.messageDisplay.classList.remove("error");
+      // add success
+      this.elements.messageDisplay.classList.add("success");
+    } else {
+      // remove success
+      this.elements.messageDisplay.classList.remove("success");
+      // add error
+      this.elements.messageDisplay.classList.add("error");
+    }
+    this.elements.messageDisplay.textContent = message;
+    $("#myMessageModal").modal("hide");
+    $("#myMessageModal").modal("show");
+    setTimeout(() => {
+      $("#myMessageModal").modal("hide");
     }, displayTime);
   } // End showAlert()
 
@@ -120,7 +122,7 @@ class Display {
     // build div
     let totalPrice = 0;
     //set subTotal and total
-    transactionArray.forEach(transaction => {
+    transactionArray.forEach((transaction) => {
       totalPrice = totalPrice + transaction.price + transaction.tax;
       totalPrice = totalPrice;
       transaction.subTotal = totalPrice;
@@ -178,7 +180,7 @@ class Display {
       "#8e7fc7",
       "#ff008b",
       "#17abf5",
-      "#4c69bd"
+      "#4c69bd",
     ];
     // create an array from an array like object
     let newArray = Array.from(tabList);

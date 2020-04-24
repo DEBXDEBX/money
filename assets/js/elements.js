@@ -14,10 +14,8 @@ class Elements {
     // // select forms
     this.myForm = document.querySelector("#myForm");
     this.settingsForm = document.querySelector("#settingsForm");
-    // // select add show forms + / icon
-
-    // // select textName and textArea
-
+    // select message display
+    this.messageDisplay = document.querySelector("#displayMessage");
     // // select the autoload list
     this.autoLoadList = document.querySelector("#autoLoadList");
   } // End constructor

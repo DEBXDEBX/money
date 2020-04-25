@@ -593,7 +593,7 @@ document.querySelector("#clear").addEventListener("click", (e) => {
 
   // set time out to focus
   window.setTimeout(function () {
-    storeItem.focus();
+    document.querySelector("#storeItem");
   }, 2000);
   return;
 });
@@ -605,7 +605,7 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
   let price = document.querySelector("#price").value.trim();
   // set time out to focus
   window.setTimeout(function () {
-    storeItem.focus();
+    document.querySelector("#storeItem");
   }, 2000);
   if (date === "") {
     warningEmptyAudio.play();

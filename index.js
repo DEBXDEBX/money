@@ -2,7 +2,7 @@ const electron = require("electron");
 let fs = require("fs");
 //start the app
 const { app, BrowserWindow, Menu, ipcMain, dialog } = electron;
-s;
+
 console.log(
   "starting: all console.log() go in terminal for the chrome side. index.js"
 );
@@ -267,22 +267,22 @@ if (process.platform === "darwin") {
 //check for NODE_ENV => prodution, development, staging, test
 //This does not work comment it out before you build
 
-//DEVELOPER TOOLS
-if (process.env.NODE_ENV !== "production") {
-  // add object to end of array menu
-  menuTemplate.push({
-    label: "View",
-    submenu: [
-      //predefined role
-      { role: "reload" },
-      {
-        label: "Toggle Developer Tools",
-        accelerator:
-          process.platform === "darwin" ? "Command+Alt+I" : "Ctrl+Shift+I",
-        click(item, focusedWindow) {
-          focusedWindow.toggleDevTools();
-        },
-      },
-    ],
-  });
-}
+// //DEVELOPER TOOLS
+// if (process.env.NODE_ENV !== "production") {
+//   // add object to end of array menu
+//   menuTemplate.push({
+//     label: "View",
+//     submenu: [
+//       //predefined role
+//       { role: "reload" },
+//       {
+//         label: "Toggle Developer Tools",
+//         accelerator:
+//           process.platform === "darwin" ? "Command+Alt+I" : "Ctrl+Shift+I",
+//         click(item, focusedWindow) {
+//           focusedWindow.toggleDevTools();
+//         },
+//       },
+//     ],
+//   });
+// }

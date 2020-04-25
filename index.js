@@ -2,6 +2,7 @@ const electron = require("electron");
 let fs = require("fs");
 //start the app
 const { app, BrowserWindow, Menu, ipcMain, dialog } = electron;
+s;
 console.log(
   "starting: all console.log() go in terminal for the chrome side. index.js"
 );

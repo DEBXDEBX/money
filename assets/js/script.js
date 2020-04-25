@@ -93,7 +93,7 @@ function pushFileSettingsContainer(filePath) {
   if (isTaken) {
     // warningNameTakenAudio.play();
     warningNameTakenAudio.play();
-    display.showAlert("That file is already loaded", "error");
+    display.showAlert("That file is already loaded!", "error");
     return;
   }
 
@@ -146,7 +146,7 @@ function autoLoadYearObjects(array) {
 //
 function readFileContents(filepath) {
   if (!filepath) {
-    let message = "No file selected";
+    let message = "No file selected!";
     let msgType = "error";
     display.showAlert(message, msgType);
     return;
@@ -154,7 +154,7 @@ function readFileContents(filepath) {
 
   fs.readFile(filepath, "utf-8", (err, data) => {
     if (err) {
-      let message = "An error occured reading the file.";
+      let message = "An error occured reading the file!";
       let msgType = "error";
       display.showAlert(message, msgType);
       return;
@@ -162,7 +162,7 @@ function readFileContents(filepath) {
       try {
         data = JSON.parse(data);
       } catch {
-        let message = "Can not parse data";
+        let message = "Can not parse data!";
         let msgType = "error";
         display.showAlert(message, msgType);
         return;
@@ -182,7 +182,7 @@ function readFileContents(filepath) {
             }
           });
           if (isTaken) {
-            display.showAlert("That file is already loaded", "error");
+            display.showAlert("That file is already loaded!", "error");
             // redisplay
             // get the names for all the years
             // and then send them to the Display
@@ -207,7 +207,7 @@ function readFileContents(filepath) {
           return;
         } else {
           let message =
-            "This is not a valid ElectronMomMoney2019September file";
+            "This is not a valid ElectronMomMoney2019September file!";
           let msgType = "error";
           display.showAlert(message, msgType);
         }
@@ -329,7 +329,7 @@ ipcRenderer.on("year:add", (event, dataObj) => {
     return;
   }
   if (dataObj.fileNamePath === undefined) {
-    display.showAlert("You clicked cancel", "error");
+    display.showAlert("You clicked cancel!", "error");
     // redisplay
     // get the names for all the years
     // and then send them to the Display
@@ -345,7 +345,7 @@ ipcRenderer.on("year:add", (event, dataObj) => {
     }
   });
   if (isTaken) {
-    display.showAlert("That file is already loaded", "error");
+    display.showAlert("That file is already loaded!", "error");
     // redisplay
     // get the names for all the years
     // and then send them to the Display
@@ -427,7 +427,7 @@ ipcRenderer.on("yearObj:load", (event, data) => {
   });
   if (isTaken) {
     // warningNameTakenAudio.play();
-    display.showAlert("That file is already loaded", "error");
+    display.showAlert("That file is already loaded!", "error");
     // redisplay
     // get the names for all the years
     // and then send them to the Display
@@ -562,7 +562,7 @@ document.querySelector("#transactionList").addEventListener("click", (e) => {
     if (!e.ctrlKey) {
       warningNameTakenAudio.play();
       display.showAlert(
-        "Please hold down control and click to delete",
+        "Please hold down control and click on the trash can to delete!",
         "error"
       );
       return;
@@ -609,19 +609,19 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
   }, 2000);
   if (date === "") {
     warningEmptyAudio.play();
-    display.showAlert("Please enter a date.", "error");
+    display.showAlert("Please enter a date!", "error");
     return;
   }
 
   if (storeItem === "") {
     warningEmptyAudio.play();
-    display.showAlert("Please enter a store or item.", "error");
+    display.showAlert("Please enter a store or item!", "error");
     return;
   }
 
   if (price === "") {
     warningEmptyAudio.play();
-    display.showAlert("Please enter a price", "error");
+    display.showAlert("Please enter a price!", "error");
     return;
   }
   price = Number(price);

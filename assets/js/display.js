@@ -13,11 +13,19 @@ class Display {
       this.elements.messageDisplay.classList.remove("error");
       // add success
       this.elements.messageDisplay.classList.add("success");
+      // remove red border
+      this.elements.messageBorder.classList.remove("redBorder");
+      // add green border
+      this.elements.messageBorder.classList.add("greenBorder");
     } else {
       // remove success
       this.elements.messageDisplay.classList.remove("success");
       // add error
       this.elements.messageDisplay.classList.add("error");
+      // remove green border
+      this.elements.messageBorder.classList.remove("greenBorder");
+      // add red border
+      this.elements.messageBorder.classList.add("redBorder");
     }
     this.elements.messageDisplay.textContent = message;
     $("#myMessageModal").modal("hide");

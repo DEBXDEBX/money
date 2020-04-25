@@ -18,5 +18,7 @@ class Elements {
     this.messageDisplay = document.querySelector("#displayMessage");
     // // select the autoload list
     this.autoLoadList = document.querySelector("#autoLoadList");
+    // select message border
+    this.messageBorder = document.querySelector("#modalBorder");
   } // End constructor
 } // End Elements class

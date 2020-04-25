@@ -78,7 +78,12 @@ nav ul li:hover {
 }
 .black {
   background-color: black;
-  border-bottom: 5px solid black;
+}
+.redBorder {
+  border: 20px solid red;
+}
+.greenBorder {
+  border: 20px solid #2de11d;
 }
 /* END CODE FOR MESSAGES  */
 .active {

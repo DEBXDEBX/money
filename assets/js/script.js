@@ -570,7 +570,7 @@ document.querySelector("#transactionList").addEventListener("click", (e) => {
 
     if (e.ctrlKey) {
       deleteAudio.play();
-
+      display.showAlert("You deleted a transaction!", "success", 2500);
       // delete transaction
       arrayOfYearObjs[yearIndex].arrayOfMonthObjects[
         monthIndex
@@ -590,7 +590,12 @@ document.querySelector("#clear").addEventListener("click", (e) => {
   btnAudio.play();
   storeItem.value = "";
   price.value = "";
-  storeItem.focus();
+
+  // set time out to focus
+  window.setTimeout(function () {
+    storeItem.focus();
+  }, 2000);
+  return;
 });
 // transaction form add Btn
 document.querySelector("#transactionBtn").addEventListener("click", (e) => {
@@ -598,7 +603,10 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
   let date = document.querySelector("#date").value.trim();
   let storeItem = document.querySelector("#storeItem").value.trim();
   let price = document.querySelector("#price").value.trim();
-  document.querySelector("#storeItem").focus();
+  // set time out to focus
+  window.setTimeout(function () {
+    storeItem.focus();
+  }, 2000);
   if (date === "") {
     warningEmptyAudio.play();
     display.showAlert("Please enter a date.", "error");

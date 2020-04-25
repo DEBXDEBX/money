@@ -100,7 +100,7 @@ function loadYear() {
   };
   dialog.showOpenDialog(null, myOptions, (fileNames) => {
     if (!fileNames) {
-      let message = "No file selected";
+      let message = "No file selected!";
       let msgType = "error";
       mainWindow.webContents.send("Display:showAlert", { message, msgType });
     } else {
@@ -111,7 +111,7 @@ function loadYear() {
 
   function readFileContents(filepath) {
     if (!filepath) {
-      let message = "No file selected";
+      let message = "No file selected!";
       let msgType = "error";
       mainWindow.webContents.send("Display:showAlert", { message, msgType });
       return;
@@ -119,7 +119,7 @@ function loadYear() {
 
     fs.readFile(filepath, "utf-8", (err, data) => {
       if (err) {
-        let message = "An error occured reading the file.";
+        let message = "An error occured reading the file!";
         let msgType = "error";
         mainWindow.webContents.send("Display:showAlert", { message, msgType });
         return;
@@ -127,7 +127,7 @@ function loadYear() {
         try {
           data = JSON.parse(data);
         } catch {
-          let message = "Can not parse data";
+          let message = "Can not parse data!";
           let msgType = "error";
           mainWindow.webContents.send("Display:showAlert", {
             message,
@@ -144,7 +144,7 @@ function loadYear() {
             // data is an object to be converted to an file cab object
             mainWindow.webContents.send("yearObj:load", data);
           } else {
-            let message = "This is not a valid Money Log file";
+            let message = "This is not a valid Money Log file!";
             let msgType = "error";
             mainWindow.webContents.send("Display:showAlert", {
               message,

@@ -464,19 +464,15 @@ ipcRenderer.on("yearObj:load", (event, data) => {
 el.yearList.addEventListener("click", (e) => {
   // event delegation
   if (e.target.classList.contains("year")) {
-    // set's the current target active
+    let yearList = document.getElementsByClassName("year");
+    // create an array from an array like object
+    let newArray = Array.from(yearList);
+    newArray.forEach((item) => {
+      item.classList.remove("active");
+    });
+    // add active class
     e.target.classList.add("active");
-    //The Next code is to set the current tab color white with the active class
-    var el = document.querySelectorAll(".year");
-    for (let i = 0; i < el.length; i++) {
-      el[i].onclick = function () {
-        var c = 0;
-        while (c < el.length) {
-          el[c++].className = "year";
-        }
-        el[i].className = "year active";
-      };
-    }
+
     // get the index from the html
     let index = e.target.dataset.index;
     index = parseInt(index);
@@ -505,19 +501,15 @@ el.yearList.addEventListener("click", (e) => {
 el.monthList.addEventListener("click", (e) => {
   // event delegation
   if (e.target.classList.contains("month")) {
-    // set's the current target active
+    let monthList = document.getElementsByClassName("month");
+    // create an array from an array like object
+    let newArray = Array.from(monthList);
+    newArray.forEach((item) => {
+      item.classList.remove("active");
+    });
+    // add active class
     e.target.classList.add("active");
-    //The Next code is to set the current tab color white with the active class
-    var el = document.querySelectorAll(".month");
-    for (let i = 0; i < el.length; i++) {
-      el[i].onclick = function () {
-        var c = 0;
-        while (c < el.length) {
-          el[c++].className = "month";
-        }
-        el[i].className = "month active";
-      };
-    }
+
     // get the index from the html
     let index = e.target.dataset.index;
     index = parseInt(index);

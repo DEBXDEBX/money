@@ -187,8 +187,11 @@ class Display {
       "#820ee8",
       "#8e7fc7",
       "#ff008b",
+      "#4dc6e8",
       "#17abf5",
       "#4c69bd",
+      "#e251dc",
+      "#bbb70e",
     ];
     // create an array from an array like object
     let newArray = Array.from(tabList);

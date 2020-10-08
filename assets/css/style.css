@@ -88,6 +88,12 @@ nav ul li:hover {
 /* END CODE FOR MESSAGES  */
 .active {
   color: white;
+  box-shadow: 5px 4px 9px black;
+}
+#yearHeading,
+#monthHeading,
+#transactionHeading {
+  box-shadow: 5px 4px 9px black;
 }
 #monthHeading,
 #transactionHeading,
@@ -114,6 +120,8 @@ nav ul li:hover {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  box-shadow: 3px 3px 4px black;
+  margin: 5px;
 }
 .red {
   color: red;
@@ -182,4 +190,7 @@ input[type="checkbox"]:hover {
 }
 #autoLoadList {
   margin-left: 45px;
+}
+.setFlex {
+  box-shadow: 5px 4px 9px black;
 }

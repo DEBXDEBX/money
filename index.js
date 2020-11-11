@@ -268,21 +268,21 @@ if (process.platform === "darwin") {
 //This does not work comment it out before you build
 
 // DEVELOPER TOOLS
-if (process.env.NODE_ENV !== "production") {
-  // add object to end of array menu
-  menuTemplate.push({
-    label: "View",
-    submenu: [
-      //predefined role
-      { role: "reload" },
-      {
-        label: "Toggle Developer Tools",
-        accelerator:
-          process.platform === "darwin" ? "Command+Alt+I" : "Ctrl+Shift+I",
-        click(item, focusedWindow) {
-          focusedWindow.toggleDevTools();
-        },
-      },
-    ],
-  });
-}
+// if (process.env.NODE_ENV !== "production") {
+//   // add object to end of array menu
+//   menuTemplate.push({
+//     label: "View",
+//     submenu: [
+//       //predefined role
+//       { role: "reload" },
+//       {
+//         label: "Toggle Developer Tools",
+//         accelerator:
+//           process.platform === "darwin" ? "Command+Alt+I" : "Ctrl+Shift+I",
+//         click(item, focusedWindow) {
+//           focusedWindow.toggleDevTools();
+//         },
+//       },
+//     ],
+//   });
+// }

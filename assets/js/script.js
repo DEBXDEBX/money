@@ -5,10 +5,7 @@ let { dialog } = app;
 let fs = require("fs");
 const electron = require("electron");
 const { ipcRenderer } = electron;
-// Select form
-let storeItem = document.querySelector("#storeItem");
-let price = document.querySelector("#price");
-let taxBox = document.querySelector("#taxInput");
+
 // Select audio files
 const addAudio = document.querySelector("#addAudio");
 const addImageAudio = document.querySelector("#addImageAudio");
@@ -32,10 +29,6 @@ let taxRate = 0.06;
 let yearIndex = -243;
 // create month index
 let monthIndex = -243;
-// this is for the fontSize
-let root = document.querySelector(":root");
-// auto load heck box
-let checkBox = document.querySelector("#autoLoad");
 // temp hold for array
 let settingsArrayContainer;
 //The start of program exicution.
@@ -58,7 +51,7 @@ function startUp() {
     // update Form
     display.showAutoLoadList(settingsArrayContainer);
 
-    if (checkBox.checked) {
+    if (el.autoLoadCheckBox.checked) {
       if (settings.filePathArray) {
         autoLoadYearObjects(settings.filePathArray);
       }
@@ -68,27 +61,22 @@ function startUp() {
 //*************************************************** */
 // Helper functions
 //*************************************************** */
-//
+// *****************************************************
 function save() {
   arrayOfYearObjs[yearIndex].writeYearToHardDisk(fs, display);
 }
+// ****************************************************
 function removeActiveClass(element) {
   if (element) {
     element.classList.remove("active");
   }
 }
+// ******************************************************
 function addDateToForm() {
-  let options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
   let date = new Date();
-
-  document.querySelector("#date").value = date.toLocaleDateString();
+  el.dateInput.value = date.toLocaleDateString();
 }
-//
+// **********************************************
 function pushFileSettingsContainer(filePath) {
   // check if the fileNamePath already exists if it does alert and return
   // make a variable to return
@@ -108,7 +96,7 @@ function pushFileSettingsContainer(filePath) {
   // add it too tempHOld
   settingsArrayContainer.push(filePath);
 }
-//
+// ****************************************************
 function sortArrayByName(array) {
   array.sort(function (a, b) {
     const nameA = a.name.toUpperCase(); // ignore upper and lowercase
@@ -123,7 +111,7 @@ function sortArrayByName(array) {
     return 0;
   }); //End sort function
 }
-//
+// ***************************************************
 function getRadioValue(form, name) {
   let val;
   // get list of radio buttons with specified name
@@ -138,20 +126,20 @@ function getRadioValue(form, name) {
   }
   return val; // return value of checked radio or undefined if none checked
 }
-//
+// *******************************************************
 function mapOutKey(key, array) {
   const newArray = array.map(function (item) {
     return item[key];
   });
   return newArray;
 }
-//
+// *****************************************************
 function autoLoadYearObjects(array) {
   for (const item of array) {
     readFileContents(item);
   }
 }
-//
+// ********************************************************
 function readFileContents(filepath) {
   if (!filepath) {
     const message = "No file selected!";
@@ -224,7 +212,7 @@ function readFileContents(filepath) {
     }
   });
 }
-//
+// **************************************************
 function loadUpSettingsForm() {
   const settingsStorage = new SettingsStorage();
   const settings = settingsStorage.getSettingsFromFile();
@@ -232,27 +220,27 @@ function loadUpSettingsForm() {
 
   if (settings.type === "momMoney") {
     //set the tax rate text input
-    document.querySelector("#taxRate").value = settings.taxRate;
+    el.taxRateInput.value = settings.taxRate;
 
     // set check box
-    checkBox.checked = settings.autoLoad;
+    el.autoLoadCheckBox.checked = settings.autoLoad;
 
     // check the right font size
     switch (settings.fontSize) {
       case "x-small":
-        document.querySelector("#x-small").checked = true;
+        el.xSmallRadio.checked = true;
         break;
       case "small":
-        document.querySelector("#small").checked = true;
+        el.smallRadio.checked = true;
         break;
       case "normal":
-        document.querySelector("#normal").checked = true;
+        el.normalRadio.checked = true;
         break;
       case "large":
-        document.querySelector("#large").checked = true;
+        el.largeRadio.checked = true;
         break;
       case "x-large":
-        document.querySelector("#x-large").checked = true;
+        el.xLargeRadio.checked = true;
         break;
       default:
         console.log("No valid font size");
@@ -261,28 +249,28 @@ function loadUpSettingsForm() {
   // update autoload form ul
   display.showAutoLoadList(settingsArrayContainer);
 } // End loadUpSettingsForm()
-//
+// ******************************************
 function applySettings(settings) {
-  checkBox.checked = settings.autoLoad;
+  el.autoLoadCheckBox.checked = settings.autoLoad;
   // set tax variable
   taxRate = settings.taxRate;
-  document.querySelector("#taxSpan").textContent = `${settings.taxRate}%`;
+  el.taxSpan.textContent = `${settings.taxRate}%`;
 
   switch (settings.fontSize) {
     case "x-small":
-      root.style.fontSize = "10px";
+      el.root.style.fontSize = "10px";
       break;
     case "small":
-      root.style.fontSize = "12px";
+      el.root.style.fontSize = "12px";
       break;
     case "normal":
-      root.style.fontSize = "16px";
+      el.root.style.fontSize = "16px";
       break;
     case "large":
-      root.style.fontSize = "20px";
+      el.root.style.fontSize = "20px";
       break;
     case "x-large":
-      root.style.fontSize = "24px";
+      el.root.style.fontSize = "24px";
       break;
     default:
       console.log("No valid font-size");
@@ -379,19 +367,19 @@ ipcRenderer.on("year:add", (event, dataObj) => {
 ipcRenderer.on("FontSize:change", (event, fontSize) => {
   switch (fontSize) {
     case "x-small":
-      root.style.fontSize = "10px";
+      el.root.style.fontSize = "10px";
       break;
     case "small":
-      root.style.fontSize = "12px";
+      el.root.style.fontSize = "12px";
       break;
     case "normal":
-      root.style.fontSize = "16px";
+      el.root.style.fontSize = "16px";
       break;
     case "large":
-      root.style.fontSize = "20px";
+      el.root.style.fontSize = "20px";
       break;
     case "x-large":
-      root.style.fontSize = "24px";
+      el.root.style.fontSize = "24px";
       break;
     default:
       console.log("No valid font-size");
@@ -496,7 +484,7 @@ el.monthList.addEventListener("click", (e) => {
 //  Transaction Code
 // *************************************************************
 // Transaction UL
-document.querySelector("#transactionList").addEventListener("click", (e) => {
+el.transactionList.addEventListener("click", (e) => {
   // get the index from the html
   let index = e.target.parentElement.parentElement.dataset.index;
   if (isNaN(index)) {
@@ -531,26 +519,16 @@ document.querySelector("#transactionList").addEventListener("click", (e) => {
     }
   }
 });
-// transaction form clear Btn
-document.querySelector("#clear").addEventListener("click", (e) => {
-  btnAudio.play();
-  storeItem.value = "";
-  price.value = "";
-  // set time out to focus
-  window.setTimeout(function () {
-    document.querySelector("#storeItem");
-  }, 2000);
-  return;
-});
+
 // transaction form add Btn
-document.querySelector("#transactionBtn").addEventListener("click", (e) => {
+el.transactionSubmitBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  const date = document.querySelector("#date").value.trim();
-  const storeItem = document.querySelector("#storeItem").value.trim();
-  const price = document.querySelector("#price").value.trim();
+  const date = el.dateInput.value.trim();
+  const storeItem = el.storeItemInput.value.trim();
+  let price = el.priceInput.value.trim();
   // set time out to focus
   window.setTimeout(function () {
-    document.querySelector("#storeItem");
+    el.storeItemInput.focus();
   }, 2000);
   if (!date) {
     warningEmptyAudio.play();
@@ -576,12 +554,12 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
     display.showAlert("Please enter a number for the price!", "error");
     return;
   }
-  const newTransaction;
-  if (taxBox.checked) {
+  let newTransaction;
+  if (el.taxInputCheckBox.checked) {
     // create transaction with tax
     const tax = price * taxRate;
     newTransaction = new Transaction(date, storeItem, price, tax);
-    taxBox.checked = false;
+    el.taxInputCheckBox.checked = false;
   } else {
     // create transaction without tax
     newTransaction = new Transaction(date, storeItem, price);
@@ -600,6 +578,18 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
       .arrayOfTransactions
   );
 });
+
+// transaction form clear Btn
+el.transactionClearBtn.addEventListener("click", (e) => {
+  btnAudio.play();
+  el.storeItemInput.value = "";
+  el.priceInput.value = "";
+  // set time out to focus
+  window.setTimeout(function () {
+    el.storeItemInput.focus();
+  }, 2000);
+  return;
+});
 // *************************************************************
 //  End Transaction Code
 // *************************************************************
@@ -607,12 +597,12 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
 // Settings Code
 // *************************************************************
 // when You click on save settings Btn
-document.querySelector("#settingsSave").addEventListener("click", (e) => {
+el.saveSettingsSubmitBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
   // get form data to create a settings object
   // get the taxRate
-  const taxRate = document.querySelector("#taxRate").value;
+  let taxRate = el.taxRateInput.value;
   taxRate = Number(taxRate);
   // fontsize radio code
   const fontSizeValue = getRadioValue(el.settingsForm, "fontSize");
@@ -623,7 +613,7 @@ document.querySelector("#settingsSave").addEventListener("click", (e) => {
   settingsObj.fontSize = fontSizeValue;
   settingsObj.filePathArray = settingsArrayContainer;
   // set auto load true or false
-  settingsObj.autoLoad = checkBox.checked;
+  settingsObj.autoLoad = el.autoLoadCheckBox.checked;
   // save the object
   settingsStorage.saveSettings(settingsObj);
   addAudio.play();
@@ -647,7 +637,7 @@ document.querySelector("#settingsSave").addEventListener("click", (e) => {
 }); // End
 
 // when You click on settings form cancel Btn
-document.querySelector("#settingsCancel").addEventListener("click", (e) => {
+el.settingsCancelBtn.addEventListener("click", (e) => {
   cancelAudio.play();
   // hide form
   display.displayNone(el.settingsForm);
@@ -656,7 +646,7 @@ document.querySelector("#settingsCancel").addEventListener("click", (e) => {
 });
 
 // when You click on settings form factory reset btn
-document.querySelector("#factoryReset").addEventListener("click", (e) => {
+el.factoryResetBtn.addEventListener("click", (e) => {
   btnAudio.play();
   const settingsStorage = new SettingsStorage();
   settingsStorage.clearFileFromLocalStorage();
@@ -664,7 +654,7 @@ document.querySelector("#factoryReset").addEventListener("click", (e) => {
 });
 
 // When You click on settings form add path to autoload Btn
-document.querySelector("#settingsAddPath").addEventListener("click", (e) => {
+el.settingsAddPathBtn.addEventListener("click", (e) => {
   e.preventDefault();
   // this is for extensions
   const myOptions = {
@@ -693,7 +683,7 @@ document.querySelector("#settingsAddPath").addEventListener("click", (e) => {
 });
 
 // when You click on x to delete a file path
-document.querySelector("#autoLoadList").addEventListener("click", (e) => {
+el.autoLoadList.addEventListener("click", (e) => {
   e.preventDefault();
   // event delegation
   if (e.target.classList.contains("deleteFile")) {

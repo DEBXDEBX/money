@@ -97,7 +97,7 @@
         <label for="date">Date</label>
         <input
           name="date"
-          id="date"
+          id="dateInput"
           type="text"
           class="form-control"
           placeholder="Date"
@@ -108,7 +108,7 @@
         <label for="storeItem">Store / Item</label>
         <input
           name="storeItem"
-          id="storeItem"
+          id="storeItemInput"
           type="text"
           autofocus
           class="form-control"
@@ -117,10 +117,10 @@
       </div>
 
       <div class="form-group">
-        <label for="storeItem">Price</label>
+        <label for="Price">Price</label>
         <input
           name="price"
-          id="price"
+          id="priceInput"
           type="text"
           class="form-control"
           placeholder="Price"
@@ -128,20 +128,20 @@
       </div>
 
       <div id="taxDiv" class="form-group">
-        <input id="taxInput" name="tax" type="checkbox" autofocus class="" />
+        <input id="taxInputCheckBox" name="tax" type="checkbox" autofocus class="" />
         <label for="tax">add tax<span id="taxSpan"></span></label>
       </div>
 
       <div class="form-group">
         <input
-          id="transactionBtn"
+          id="transactionSubmitBtn"
           class="btn btn-success form-control"
           type="submit"
           value="Add Transaction"
         />
       </div>
       <div class="form-group">
-        <button id="clear" class="btn btn-dark form-control" type="button">
+        <button id="transactionClearBtn" class="btn btn-dark form-control" type="button">
           Clear
         </button>
       </div>
@@ -154,7 +154,7 @@
 
         <div class="form-group">
           <input
-            id="taxRate"
+            id="taxRateInput"
             name="taxRate"
             type="text"
             autofocus
@@ -168,24 +168,24 @@
       <div class="form-group setFlex">
         <label for="fontSize">Pick a font size</label>
         <div>
-          <input id="x-small" type="radio" name="fontSize" value="x-small" />
+          <input id="xSmallRadio" type="radio" name="fontSize" value="x-small" />
           x-small
-          <input id="small" type="radio" name="fontSize" value="small" /> small
+          <input id="smallRadio" type="radio" name="fontSize" value="small" /> small
           <input
-            id="normal"
+            id="normalRadio"
             type="radio"
             name="fontSize"
             value="normal"
             checked
           />
           normal
-          <input id="large" type="radio" name="fontSize" value="large" /> large
-          <input id="x-large" type="radio" name="fontSize" value="x-large" />
+          <input id="largeRadio" type="radio" name="fontSize" value="large" /> large
+          <input id="xLargeRadio" type="radio" name="fontSize" value="x-large" />
           x-large
         </div>
       </div>
 
-      <div><input id="autoLoad" type="checkbox" /> Auto Load Year's</div>
+      <div><input id="autoLoadCheckBox" type="checkbox" /> Auto Load Year's</div>
 
       <div>
         <ol type="1" id="autoLoadList">
@@ -196,7 +196,7 @@
       <div class="form-group">
         <button
           class="btn btn-primary form-control"
-          id="settingsAddPath"
+          id="settingsAddPathBtn"
           type="button"
         >
           Add File To Auto Load List
@@ -204,7 +204,7 @@
       </div>
       <div class="form-group">
         <input
-          id="settingsSave"
+          id="saveSettingsSubmitBtn"
           class="btn btn-success form-control"
           type="submit"
           value="Save Settings"
@@ -213,7 +213,7 @@
 
       <div class="form-group">
         <button
-          id="factoryReset"
+          id="factoryResetBtn"
           class="btn btn-danger form-control"
           type="button"
         >
@@ -223,7 +223,7 @@
 
       <div class="form-group">
         <button
-          id="settingsCancel"
+          id="settingsCancelBtn"
           class="btn btn-warning form-control"
           type="button"
         >

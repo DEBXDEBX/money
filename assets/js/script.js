@@ -57,8 +57,8 @@ function startUp() {
     applySettings(settings);
     // update Form
     display.showAutoLoadList(settingsArrayContainer);
-    var x = document.querySelector("#autoLoad").checked;
-    if (x === true) {
+
+    if (checkBox.checked) {
       if (settings.filePathArray) {
         autoLoadYearObjects(settings.filePathArray);
       }
@@ -69,6 +69,14 @@ function startUp() {
 // Helper functions
 //*************************************************** */
 //
+function save() {
+  arrayOfYearObjs[yearIndex].writeYearToHardDisk(fs, display);
+}
+function removeActiveClass(element) {
+  if (element) {
+    element.classList.remove("active");
+  }
+}
 function addDateToForm() {
   let options = {
     weekday: "long",
@@ -85,26 +93,26 @@ function pushFileSettingsContainer(filePath) {
   // check if the fileNamePath already exists if it does alert and return
   // make a variable to return
   let isTaken = false;
-  settingsArrayContainer.forEach((element) => {
+
+  for (const element of settingsArrayContainer) {
     if (element === filePath) {
       isTaken = true;
     }
-  });
+  }
   if (isTaken) {
     // warningNameTakenAudio.play();
     warningNameTakenAudio.play();
     display.showAlert("That file is already loaded!", "error");
     return;
   }
-
   // add it too tempHOld
   settingsArrayContainer.push(filePath);
 }
 //
 function sortArrayByName(array) {
   array.sort(function (a, b) {
-    var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-    var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+    const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+    const nameB = b.name.toUpperCase(); // ignore upper and lowercase
     if (nameA < nameB) {
       return -1;
     }
@@ -117,11 +125,11 @@ function sortArrayByName(array) {
 }
 //
 function getRadioValue(form, name) {
-  var val;
+  let val;
   // get list of radio buttons with specified name
-  var radios = form.elements[name];
+  const radios = form.elements[name];
   // loop through list of radio buttons
-  for (var i = 0, len = radios.length; i < len; i++) {
+  for (let i = 0, len = radios.length; i < len; i++) {
     if (radios[i].checked) {
       // radio checked?
       val = radios[i].value; // if so, hold its value in val
@@ -139,31 +147,31 @@ function mapOutKey(key, array) {
 }
 //
 function autoLoadYearObjects(array) {
-  array.forEach(function (item) {
+  for (const item of array) {
     readFileContents(item);
-  });
+  }
 }
 //
 function readFileContents(filepath) {
   if (!filepath) {
-    let message = "No file selected!";
-    let msgType = "error";
+    const message = "No file selected!";
+    const msgType = "error";
     display.showAlert(message, msgType);
     return;
   }
 
   fs.readFile(filepath, "utf-8", (err, data) => {
     if (err) {
-      let message = "An error occured reading the file!";
-      let msgType = "error";
+      const message = "An error occured reading the file!";
+      const msgType = "error";
       display.showAlert(message, msgType);
       return;
     } else {
       try {
         data = JSON.parse(data);
       } catch {
-        let message = "Can not parse data!";
-        let msgType = "error";
+        const message = "Can not parse data!";
+        const msgType = "error";
         display.showAlert(message, msgType);
         return;
       }
@@ -176,11 +184,12 @@ function readFileContents(filepath) {
           // check if the fileNamePath already exists if it does alert and return
           // make a variable to return
           let isTaken = false;
-          arrayOfYearObjs.forEach((element) => {
+
+          for (const element of arrayOfYearObjs) {
             if (element.fileNamePath === data.fileNamePath) {
               isTaken = true;
             }
-          });
+          }
           if (isTaken) {
             display.showAlert("That file is already loaded!", "error");
             // redisplay
@@ -190,7 +199,7 @@ function readFileContents(filepath) {
             return;
           }
           // create a file cab object
-          let newYearObject = new YearObject(
+          const newYearObject = new YearObject(
             data.name,
             data.fileNamePath,
             data.arrayOfMonthObjects
@@ -199,16 +208,16 @@ function readFileContents(filepath) {
           arrayOfYearObjs.push(newYearObject);
           sortArrayByName(arrayOfYearObjs);
           // write the file cab object to disk
-          newYearObject.writeYearToHardDisk(fs);
+          newYearObject.writeYearToHardDisk(fs, display);
           // redisplay
           // get the names for all the years
           // and then send them to the Display
           display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
           return;
         } else {
-          let message =
+          const message =
             "This is not a valid ElectronMomMoney2019September file!";
-          let msgType = "error";
+          const msgType = "error";
           display.showAlert(message, msgType);
         }
       }
@@ -217,8 +226,8 @@ function readFileContents(filepath) {
 }
 //
 function loadUpSettingsForm() {
-  let settingsStorage = new SettingsStorage();
-  let settings = settingsStorage.getSettingsFromFile();
+  const settingsStorage = new SettingsStorage();
+  const settings = settingsStorage.getSettingsFromFile();
   settingsArrayContainer = settings.filePathArray;
 
   if (settings.type === "momMoney") {
@@ -226,13 +235,7 @@ function loadUpSettingsForm() {
     document.querySelector("#taxRate").value = settings.taxRate;
 
     // set check box
-    if (settings.autoLoad) {
-      // check the box
-      checkBox.checked = true;
-    } else {
-      // uncheck the box
-      checkBox.checked = false;
-    }
+    checkBox.checked = settings.autoLoad;
 
     // check the right font size
     switch (settings.fontSize) {
@@ -260,9 +263,7 @@ function loadUpSettingsForm() {
 } // End loadUpSettingsForm()
 //
 function applySettings(settings) {
-  if (settings.autoLoad === true) {
-    document.querySelector("#autoLoad").checked = true;
-  }
+  checkBox.checked = settings.autoLoad;
   // set tax variable
   taxRate = settings.taxRate;
   document.querySelector("#taxSpan").textContent = `${settings.taxRate}%`;
@@ -306,88 +307,70 @@ ipcRenderer.on("Display:showAlert", (event, dataObj) => {
 ipcRenderer.on("year:add", (event, dataObj) => {
   if (!dataObj.fileNamePath) {
     display.showAlert("You did not enter a path!", "error");
-    // redisplay
-    // get the names for all the years
-    // and then send them to the Display
     display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
     return;
   }
-  if (dataObj.name === "") {
+  if (!dataObj.name) {
     display.showAlert("You did not enter a name for the Year!", "error");
-    // redisplay
-    // get the names for all the years
-    // and then send them to the Display
     display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
     return;
   }
   if (isNaN(Number(dataObj.name))) {
     display.showAlert("You did not enter a number for the Year!", "error");
-    // redisplay
-    // get the names for all the years
-    // and then send them to the Display
     display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
     return;
   }
   if (dataObj.fileNamePath === undefined) {
     display.showAlert("You clicked cancel!", "error");
-    // redisplay
-    // get the names for all the years
-    // and then send them to the Display
     display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
     return;
   }
   // check if the fileNamePath already exists if it does alert and return
   // make a variable to return
   let isTaken = false;
-  arrayOfYearObjs.forEach((element) => {
+
+  for (const element of arrayOfYearObjs) {
     if (element.fileNamePath === dataObj.fileNamePath) {
       isTaken = true;
     }
-  });
+  }
   if (isTaken) {
     display.showAlert("That file is already loaded!", "error");
-    // redisplay
-    // get the names for all the years
-    // and then send them to the Display
     display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
     return;
   }
   // create a year object
-  let newYear = new YearObject(dataObj.name, dataObj.fileNamePath);
+  const newYear = new YearObject(dataObj.name, dataObj.fileNamePath);
   // create the 12 months
-  let January = new MonthObject("January");
+  const January = new MonthObject("January");
   newYear.arrayOfMonthObjects.push(January);
-  let February = new MonthObject("February");
+  const February = new MonthObject("February");
   newYear.arrayOfMonthObjects.push(February);
-  let March = new MonthObject("March");
+  const March = new MonthObject("March");
   newYear.arrayOfMonthObjects.push(March);
-  let April = new MonthObject("April");
+  const April = new MonthObject("April");
   newYear.arrayOfMonthObjects.push(April);
-  let May = new MonthObject("May");
+  const May = new MonthObject("May");
   newYear.arrayOfMonthObjects.push(May);
-  let June = new MonthObject("June");
+  const June = new MonthObject("June");
   newYear.arrayOfMonthObjects.push(June);
-  let July = new MonthObject("July");
+  const July = new MonthObject("July");
   newYear.arrayOfMonthObjects.push(July);
-  let August = new MonthObject("August");
+  const August = new MonthObject("August");
   newYear.arrayOfMonthObjects.push(August);
-  let September = new MonthObject("September");
+  const September = new MonthObject("September");
   newYear.arrayOfMonthObjects.push(September);
-  let October = new MonthObject("October");
+  const October = new MonthObject("October");
   newYear.arrayOfMonthObjects.push(October);
-  let November = new MonthObject("November");
+  const November = new MonthObject("November");
   newYear.arrayOfMonthObjects.push(November);
-  let December = new MonthObject("December");
+  const December = new MonthObject("December");
   newYear.arrayOfMonthObjects.push(December);
   // push the year obj into the array of year objects
   arrayOfYearObjs.push(newYear);
   sortArrayByName(arrayOfYearObjs);
   // write the year object to disk
-  newYear.writeYearToHardDisk(fs);
-
-  // redisplay
-  // get the names for all the years
-  // and then send them to the Display
+  newYear.writeYearToHardDisk(fs, display);
   display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
 });
 // End ipcRenderer.on("year:add"********************
@@ -418,24 +401,21 @@ ipcRenderer.on("FontSize:change", (event, fontSize) => {
 // listen for inedex.js to send data
 ipcRenderer.on("yearObj:load", (event, data) => {
   // check if the fileNamePath already exists if it does alert and return
-  // make a variable to return
+  // make a variable to check
   let isTaken = false;
-  arrayOfYearObjs.forEach((element) => {
+
+  for (const element of arrayOfYearObjs) {
     if (element.fileNamePath === data.fileNamePath) {
       isTaken = true;
     }
-  });
+  }
   if (isTaken) {
-    // warningNameTakenAudio.play();
     display.showAlert("That file is already loaded!", "error");
-    // redisplay
-    // get the names for all the years
-    // and then send them to the Display
     display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
     return;
   }
   // create a year object
-  let newYear = new YearObject(
+  const newYear = new YearObject(
     data.name,
     data.fileNamePath,
     data.arrayOfMonthObjects
@@ -444,11 +424,7 @@ ipcRenderer.on("yearObj:load", (event, data) => {
   arrayOfYearObjs.push(newYear);
   sortArrayByName(arrayOfYearObjs);
   // write the year object to disk
-  newYear.writeYearToHardDisk(fs);
-
-  // redisplay
-  // get the names for all the years
-  // and then send them to the Display
+  newYear.writeYearToHardDisk(fs, display);
   display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
   return;
 });
@@ -464,23 +440,15 @@ ipcRenderer.on("yearObj:load", (event, data) => {
 el.yearList.addEventListener("click", (e) => {
   // event delegation
   if (e.target.classList.contains("year")) {
-    let yearList = document.getElementsByClassName("year");
-    // create an array from an array like object
-    let newArray = Array.from(yearList);
-    newArray.forEach((item) => {
-      item.classList.remove("active");
-    });
+    const element = document.querySelector(".year.active");
+    removeActiveClass(element);
     // add active class
     e.target.classList.add("active");
 
     // get the index from the html
     let index = e.target.dataset.index;
     index = parseInt(index);
-
-    // Bug fix
     if (isNaN(index)) {
-      //when you click out side of te tab
-      // if it's not a number return
       return;
     }
     yearIndex = index;
@@ -501,26 +469,16 @@ el.yearList.addEventListener("click", (e) => {
 el.monthList.addEventListener("click", (e) => {
   // event delegation
   if (e.target.classList.contains("month")) {
-    let monthList = document.getElementsByClassName("month");
-    // create an array from an array like object
-    let newArray = Array.from(monthList);
-    newArray.forEach((item) => {
-      item.classList.remove("active");
-    });
+    const element = document.querySelector(".month.active");
+    removeActiveClass(element);
     // add active class
     e.target.classList.add("active");
-
     // get the index from the html
     let index = e.target.dataset.index;
     index = parseInt(index);
-
-    // Bug fix
     if (isNaN(index)) {
-      //when you click out side of te tab
-      // if it's not a number return
       return;
     }
-
     monthIndex = index;
     tabAudio.play();
     // get the array of Transactions and send it to display
@@ -541,14 +499,10 @@ el.monthList.addEventListener("click", (e) => {
 document.querySelector("#transactionList").addEventListener("click", (e) => {
   // get the index from the html
   let index = e.target.parentElement.parentElement.dataset.index;
-
-  // Bug fix
   if (isNaN(index)) {
-    //when you click out side of te tab
-    // if it's not a number return
     return;
   }
-  let deleteIndex = parseInt(index);
+  const deleteIndex = parseInt(index);
   // event delegation
   if (e.target.classList.contains("deleteTrans")) {
     if (!e.ctrlKey) {
@@ -568,7 +522,7 @@ document.querySelector("#transactionList").addEventListener("click", (e) => {
         monthIndex
       ].arrayOfTransactions.splice(deleteIndex, 1);
       // save to disk
-      arrayOfYearObjs[yearIndex].writeYearToHardDisk(fs);
+      save();
       // get the array of Transactions and send it to display
       display.paintTransactions(
         arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
@@ -582,7 +536,6 @@ document.querySelector("#clear").addEventListener("click", (e) => {
   btnAudio.play();
   storeItem.value = "";
   price.value = "";
-
   // set time out to focus
   window.setTimeout(function () {
     document.querySelector("#storeItem");
@@ -592,26 +545,26 @@ document.querySelector("#clear").addEventListener("click", (e) => {
 // transaction form add Btn
 document.querySelector("#transactionBtn").addEventListener("click", (e) => {
   e.preventDefault();
-  let date = document.querySelector("#date").value.trim();
-  let storeItem = document.querySelector("#storeItem").value.trim();
-  let price = document.querySelector("#price").value.trim();
+  const date = document.querySelector("#date").value.trim();
+  const storeItem = document.querySelector("#storeItem").value.trim();
+  const price = document.querySelector("#price").value.trim();
   // set time out to focus
   window.setTimeout(function () {
     document.querySelector("#storeItem");
   }, 2000);
-  if (date === "") {
+  if (!date) {
     warningEmptyAudio.play();
     display.showAlert("Please enter a date!", "error");
     return;
   }
 
-  if (storeItem === "") {
+  if (!storeItem) {
     warningEmptyAudio.play();
     display.showAlert("Please enter a store or item!", "error");
     return;
   }
 
-  if (price === "") {
+  if (!price) {
     warningEmptyAudio.play();
     display.showAlert("Please enter a price!", "error");
     return;
@@ -623,10 +576,10 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
     display.showAlert("Please enter a number for the price!", "error");
     return;
   }
-  let newTransaction;
+  const newTransaction;
   if (taxBox.checked) {
     // create transaction with tax
-    let tax = price * taxRate;
+    const tax = price * taxRate;
     newTransaction = new Transaction(date, storeItem, price, tax);
     taxBox.checked = false;
   } else {
@@ -640,7 +593,7 @@ document.querySelector("#transactionBtn").addEventListener("click", (e) => {
     monthIndex
   ].arrayOfTransactions.push(newTransaction);
   // save to disk
-  arrayOfYearObjs[yearIndex].writeYearToHardDisk(fs);
+  save();
   // get the array of Transactions and send it to display
   display.paintTransactions(
     arrayOfYearObjs[yearIndex].arrayOfMonthObjects[monthIndex]
@@ -659,23 +612,18 @@ document.querySelector("#settingsSave").addEventListener("click", (e) => {
 
   // get form data to create a settings object
   // get the taxRate
-  let taxRate = document.querySelector("#taxRate").value;
+  const taxRate = document.querySelector("#taxRate").value;
   taxRate = Number(taxRate);
   // fontsize radio code
-  let fontSizeValue = getRadioValue(el.settingsForm, "fontSize");
-  let settingsStorage = new SettingsStorage();
-  let settingsObj = new SettingsObj();
+  const fontSizeValue = getRadioValue(el.settingsForm, "fontSize");
+  const settingsStorage = new SettingsStorage();
+  const settingsObj = new SettingsObj();
   // set the object values
   settingsObj.taxRate = taxRate;
   settingsObj.fontSize = fontSizeValue;
   settingsObj.filePathArray = settingsArrayContainer;
   // set auto load true or false
-  let y = document.querySelector("#autoLoad").checked;
-  if (y === true) {
-    settingsObj.autoLoad = true;
-  } else {
-    settingsObj.autoLoad = false;
-  }
+  settingsObj.autoLoad = checkBox.checked;
   // save the object
   settingsStorage.saveSettings(settingsObj);
   addAudio.play();
@@ -693,9 +641,6 @@ document.querySelector("#settingsSave").addEventListener("click", (e) => {
     applySettings(settingsObj);
     // hide form
     display.displayNone(el.settingsForm);
-    // redisplay
-    // get the names for all the years
-    // and then send them to the Display
     display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
     return;
   }
@@ -706,9 +651,6 @@ document.querySelector("#settingsCancel").addEventListener("click", (e) => {
   cancelAudio.play();
   // hide form
   display.displayNone(el.settingsForm);
-  // redisplay
-  // get the names for all the years
-  // and then send them to the Display
   display.paintYearTabs(mapOutKey("name", arrayOfYearObjs));
   return;
 });
@@ -716,7 +658,7 @@ document.querySelector("#settingsCancel").addEventListener("click", (e) => {
 // when You click on settings form factory reset btn
 document.querySelector("#factoryReset").addEventListener("click", (e) => {
   btnAudio.play();
-  let settingsStorage = new SettingsStorage();
+  const settingsStorage = new SettingsStorage();
   settingsStorage.clearFileFromLocalStorage();
   loadUpSettingsForm();
 });
@@ -724,8 +666,8 @@ document.querySelector("#factoryReset").addEventListener("click", (e) => {
 // When You click on settings form add path to autoload Btn
 document.querySelector("#settingsAddPath").addEventListener("click", (e) => {
   e.preventDefault();
-  // this is for extsions
-  let myOptions = {
+  // this is for extensions
+  const myOptions = {
     filters: [
       {
         name: "Custom File Type",
@@ -740,7 +682,7 @@ document.querySelector("#settingsAddPath").addEventListener("click", (e) => {
       display.showAlert("No file selected", "error");
     } else {
       // got file name
-      for (let filePath of fileNames) {
+      for (const filePath of fileNames) {
         pushFileSettingsContainer(filePath);
       }
       addImageAudio.play();
@@ -758,6 +700,9 @@ document.querySelector("#autoLoadList").addEventListener("click", (e) => {
     // this gets the data I embedded into the html
     let dataIndex = e.target.parentElement.parentElement.dataset.index;
     let deleteIndex = parseInt(dataIndex);
+    if (isNaN(deleteIndex)) {
+      return;
+    }
     // delete path
     settingsArrayContainer.splice(deleteIndex, 1);
     warningSelectAudio.play();

@@ -4,6 +4,21 @@ class Display {
     //JQuery
     this.$ = $;
     this.tabColorIndex = 0;
+    this.tabColors = [
+      "#2de11d",
+      "#4848e8",
+      "#e84d4d",
+      "Orange",
+      "Violet",
+      "#820ee8",
+      "#8e7fc7",
+      "#ff008b",
+      "#4dc6e8",
+      "#17abf5",
+      "#4c69bd",
+      "#e251dc",
+      "#bbb70e",
+    ];
   } // End constructor
 
   // Method
@@ -177,33 +192,16 @@ class Display {
   } // End paintTransactions(transactionArray)
 
   //Method
-  colorSetOfTabs(tabList) {
-    let tabColors = [
-      "#2de11d",
-      "#4848e8",
-      "#e84d4d",
-      "Orange",
-      "Violet",
-      "#820ee8",
-      "#8e7fc7",
-      "#ff008b",
-      "#4dc6e8",
-      "#17abf5",
-      "#4c69bd",
-      "#e251dc",
-      "#bbb70e",
-    ];
-    // create an array from an array like object
-    let newArray = Array.from(tabList);
-    for (let i = 0; i < newArray.length; i++) {
-      newArray[i].style.backgroundColor = tabColors[this.tabColorIndex];
-      if (this.tabColorIndex === tabColors.length - 1) {
+  colorSetOfTabs(htmlCollection) {
+    for (const item of htmlCollection) {
+      item.style.backgroundColor = this.tabColors[this.tabColorIndex];
+      if (this.tabColorIndex === this.tabColors.length - 1) {
         this.tabColorIndex = 0;
       } else {
         this.tabColorIndex++;
       }
     }
-  } // End colorSetOfTabs(tabList)
+  } // End colorSetOfTabs(htmlCollection)
 
   //Method
   hideSettingsForm() {
